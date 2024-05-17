@@ -40,7 +40,7 @@
         const app = initializeApp(firebaseConfig);
         const db =getFirestore(app);
 
-        const productform = document.getElementById("form-producto");
+        const productform = document.getElementById("form-vehiculos");
         productform.addEventListener("submit",async(e)=>{
             e.preventDefault();
             await addDoc(collection(db,"vehiculo"),{
