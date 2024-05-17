@@ -64,6 +64,12 @@
                 alert("Error al guardar el vehículo: " + error.message);
             }
         });
+        
     </script>
+           auth.onAuthStateChanged(user => {
+            db.collection("policies").doc(user.uid).onSnapshot(function(doc) {
+                setPolicy(doc.data())
+            })
+        })
 </body>
 </html>
