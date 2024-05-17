@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Matricula</title>
+</head>
+<body>
+    <form id="form-vehiculom">
+        <input type="text" id="id" placeholder="Ingrese el id del vechiculo">
+        <input type="text" id="marca" placeholder="Ingrese la marca del vechiculo">
+        <input type="text" id="modelo" placeholder="Ingrese el modelo del vechiculo">
+        <input type="text" id="año_fabricacion" placeholder="Ingrese año de año_fabricacion del vechiculo">
+        <input type="text" id="placa" placeholder="Ingrese la placa del vechiculo">
+        <input type="text" id="tipo" placeholder="Ingrese el tipo del vechiculo">
+        <input type="text" id="capacidad_carga" placeholder="Ingrese la capacidad de carga del vechiculo">
+        <input type="text" id="fecha" placeholder="Ingrese fecha de de Adquisición del vechiculo">
+        <input type="text" id="tipo" placeholder="Ingrese el tipo de vechiculo">
+        <input type="text" id="estado" placeholder="Ingrese el estado del vechiculo">
+        <input type="text" id="kilometraje" placeholder="Ingrese el kilometraje del vechiculo">
+        <button type="submit">Guardar </button>
+    </form>
+    <script type="module">
+        // Import the functions you need from the SDKs you need
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+        import {getFirestore,collection,addDoc,onSnapshot,deleteDoc,doc} from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+        // TODO: Add SDKs for Firebase products that you want to use
+        // https://firebase.google.com/docs/web/setup#available-libraries
+      
+        // Your web app's Firebase configuration
+        const firebaseConfig = {
+          apiKey: "AIzaSyAZAGvtCBCvuv_TPAhkDT7UxN6XLV1MVvM",
+          authDomain: "vehiculo-de899.firebaseapp.com",
+          projectId: "vehiculo-de899",
+          storageBucket: "vehiculo-de899.appspot.com",
+          messagingSenderId: "664827419796",
+          appId: "1:664827419796:web:0928e20e79b7a45360a881"
+        };
+      
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const db =getFirestore(app);
+
+        const productform = document.getElementById("form-producto");
+        productform.addEventListener("submit",async(e)=>{
+            e.preventDefault();
+            await addDoc(collection(db,"vehiculo"),{
+                id: productform.id.value,
+                marca: productform.marca.value,
+                modelo: productform.modelo.value,
+                año_fabricacion: productform.año_fabricacion.value,
+                placa: productform.placa.value,
+                tipo: productform.tipo.value,
+                capacidad_carga: productform.capacidad_carga.value,
+                fecha: productform.fecha.value,
+                tipo: productform.tipo.value,
+                estado: productform.estado.value,
+                kilometraje: productform.kilometraje.value
+                
+                
+            });
+               productform.reset();
+        });
+
+      </script>
+
+</body>
+</html>
