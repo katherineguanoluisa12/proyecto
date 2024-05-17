@@ -66,10 +66,6 @@
         });
         
     </script>
-           auth.onAuthStateChanged(user => {
-            db.collection("policies").doc(user.uid).onSnapshot(function(doc) {
-                setPolicy(doc.data())
-            })
-        })
+        
 </body>
 </html>
