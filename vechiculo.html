@@ -9,143 +9,238 @@
     <h1>----- FORMULARIO DE VEHICULO -----</h1>
     <center><img src="img/carros.png" alt="" width="10%"></center>
     <form id="form-vehiculo">
-        <TABle style="width: 100%;">
+        <table style="width: 100%;">
             <tr>
-                <td>
-                    Ingrese el id del vehiculo: <br><br>
+                <td>Ingrese el id del vehiculo: <br><br>
                     <input type="text" id="id" placeholder="Ingrese el id del vehiculo">
                 </td>
-                <td>
-                    Ingrese la marca del vehiculo: <br><br>
+                <td>Ingrese la marca del vehiculo: <br><br>
                     <input type="text" id="marca" placeholder="Ingrese la marca del vehiculo">
                 </td>
             </tr>
             <tr>
-                <td>
-                    Ingrese el modelo del vehiculo: <br><br>
+                <td>Ingrese el modelo del vehiculo: <br><br>
                     <input type="text" id="modelo" placeholder="Ingrese el modelo del vehiculo">
                 </td>
-                <td>
-                    Ingrese año de fabricación del vehiculo: <br><br>
+                <td>Ingrese año de fabricación del vehiculo: <br><br>
                     <input type="text" id="ano_fabricacion" placeholder="Ingrese año de fabricación del vehiculo">
                 </td>
             </tr>
             <tr>
-                <td>
-                    Ingrese la placa del vehiculo: <br><br>
+                <td>Ingrese la placa del vehiculo: <br><br>
                     <input type="text" id="placa" placeholder="Ingrese la placa del vehiculo">
                 </td>
-                <td>
-                    Ingrese el tipo del vehiculo: <br><br>
+                <td>Ingrese el tipo del vehiculo: <br><br>
                     <input type="text" id="tipo" placeholder="Ingrese el tipo del vehiculo">
                 </td>
             </tr>
             <tr>
-                <td>
-                    Ingrese la capacidad de carga del vehiculo: <br><br>
+                <td>Ingrese la capacidad de carga del vehiculo: <br><br>
                     <input type="text" id="capacidad_carga" placeholder="Ingrese la capacidad de carga del vehiculo">
                 </td>
-                <td>
-                    Ingrese fecha de adquisición del vehiculo: <br><br>
+                <td>Ingrese fecha de adquisición del vehiculo: <br><br>
                     <input type="text" id="fecha" placeholder="Ingrese fecha de adquisición del vehiculo">
                 </td>
             </tr>
             <tr>
-                <td>
-                    Ingrese el estado del vehiculo: <br><br>
+                <td>Ingrese el estado del vehiculo: <br><br>
                     <input type="text" id="estado" placeholder="Ingrese el estado del vehiculo">
                 </td>
-                <td>
-                    Ingrese el kilometraje del vehiculo: <br><br>
+                <td>Ingrese el kilometraje del vehiculo: <br><br>
                     <input type="text" id="kilometraje" placeholder="Ingrese el kilometraje del vehiculo">
                 </td>
             </tr>
-        </TABle>
+        </table>
         
         <button type="submit">Guardar</button>
     </form>
     
-    <script type="module">
-        // Import the functions you need from the SDKs you need
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-        import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+    <h2>Listado de Vehículos</h2>
+    <table id="vehiculos-table" border="1" style="width: 100%;">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Marca</th>
+                <th>Modelo</th>
+                <th>Año</th>
+                <th>Placa</th>
+                <th>Tipo</th>
+                <th>Capacidad de Carga</th>
+                <th>Fecha</th>
+                <th>Estado</th>
+                <th>Kilometraje</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
 
-        // Your web app's Firebase configuration
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+        import { getFirestore, collection, addDoc, getDocs, updateDoc, deleteDoc, doc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
         const firebaseConfig = {
-          apiKey: "AIzaSyDvt5uALq0-Lp4XhG7Y8tjDZD7BOSxP_eI",
-          authDomain: "vehiculo-b415f.firebaseapp.com",
-          projectId: "vehiculo-b415f",
-          storageBucket: "vehiculo-b415f.appspot.com",
-          messagingSenderId: "61014179644",
-          appId: "1:61014179644:web:7d13477e77a85ac55ee839"
+            apiKey: "AIzaSyDvt5uALq0-Lp4XhG7Y8tjDZD7BOSxP_eI",
+            authDomain: "vehiculo-b415f.firebaseapp.com",
+            projectId: "vehiculo-b415f",
+            storageBucket: "vehiculo-b415f.appspot.com",
+            messagingSenderId: "61014179644",
+            appId: "1:61014179644:web:7d13477e77a85ac55ee839"
         };
       
-        // Initialize Firebase
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
-
-        const productform = document.getElementById("form-vehiculo");
-        productform.addEventListener("submit", async (e) => {
+        
+        const form = document.getElementById('form-vehiculo');
+        form.addEventListener('submit', async (e) => {
             e.preventDefault();
 
+            const newVehicle = {
+                id: form.id.value,
+                marca: form.marca.value,
+                modelo: form.modelo.value,
+                ano_fabricacion: form.ano_fabricacion.value,
+                placa: form.placa.value,
+                tipo: form.tipo.value,
+                capacidad_carga: form.capacidad_carga.value,
+                fecha: form.fecha.value,
+                estado: form.estado.value,
+                kilometraje: form.kilometraje.value
+            };
+
             try {
-                await addDoc(collection(db, "vehiculo"), {
-                    id: productform.id.value,
-                    marca: productform.marca.value,
-                    modelo: productform.modelo.value,
-                    ano_fabricacion: productform.ano_fabricacion.value,
-                    placa: productform.placa.value,
-                    tipo: productform.tipo.value,
-                    capacidad_carga: productform.capacidad_carga.value,
-                    fecha: productform.fecha.value,
-                    estado: productform.estado.value,
-                    kilometraje: productform.kilometraje.value
-                });
-                productform.reset();
-                alert("Vehículo guardado exitosamente!");
+                await addDoc(collection(db, 'vehiculo'), newVehicle);
+                form.reset();
+                alert('Vehículo guardado exitosamente!');
+                displayVehicles();
             } catch (error) {
-                console.error("Error al guardar el vehículo: ", error);
-                alert("Error al guardar el vehículo: " + error.message);
+                console.error('Error al guardar el vehículo: ', error);
+                alert('Error al guardar el vehículo: ' + error.message);
             }
         });
-        
+
+        async function displayVehicles() {
+            const vehiculosTableBody = document.querySelector('#vehiculos-table tbody');
+            vehiculosTableBody.innerHTML = '';
+
+            try {
+                const querySnapshot = await getDocs(collection(db, 'vehiculo'));
+                querySnapshot.forEach((doc) => {
+                    const vehicle = doc.data();
+                    vehiculosTableBody.innerHTML += `
+                        <tr>
+                            <td>${vehicle.id}</td>
+                            <td>${vehicle.marca}</td>
+                            <td>${vehicle.modelo}</td>
+                            <td>${vehicle.ano_fabricacion}</td>
+                            <td>${vehicle.placa}</td>
+                            <td>${vehicle.tipo}</td>
+                            <td>${vehicle.capacidad_carga}</td>
+                            <td>${vehicle.fecha}</td>
+                            <td>${vehicle.estado}</td>
+                            <td>${vehicle.kilometraje}</td>
+                            <td>
+                                <button onclick="editVehicle('${doc.id}')">Editar</button>
+                                <button onclick="deleteVehicle('${doc.id}')">Eliminar</button>
+                            </td>
+                        </tr>
+                    `;
+                });
+            } catch (error) {
+                console.error('Error al obtener los vehículos: ', error);
+            }
+        }
+
+        window.editVehicle = async (id) => {
+            const docRef = doc(db, 'vehiculo', id);
+            const docSnap = await getDoc(docRef);
+
+            if (docSnap.exists()) {
+                const vehicle = docSnap.data();
+                form.id.value = vehicle.id;
+                form.marca.value = vehicle.marca;
+                form.modelo.value = vehicle.modelo;
+                form.ano_fabricacion.value = vehicle.ano_fabricacion;
+                form.placa.value = vehicle.placa;
+                form.tipo.value = vehicle.tipo;
+                form.capacidad_carga.value = vehicle.capacidad_carga;
+                form.fecha.value = vehicle.fecha;
+                form.estado.value = vehicle.estado;
+                form.kilometraje.value = vehicle.kilometraje;
+
+                form.onsubmit = async (e) => {
+                    e.preventDefault();
+
+                    try {
+                        await updateDoc(docRef, {
+                            id: form.id.value,
+                            marca: form.marca.value,
+                            modelo: form.modelo.value,
+                            ano_fabricacion: form.ano_fabricacion.value,
+                            placa: form.placa.value,
+                            tipo: form.tipo.value,
+                            capacidad_carga: form.capacidad_carga.value,
+                            fecha: form.fecha.value,
+                            estado: form.estado.value,
+                            kilometraje: form.kilometraje.value
+                        });
+                        form.reset();
+                        alert('Vehículo actualizado exitosamente!');
+                        displayVehicles();
+                    } catch (error) {
+                        console.error('Error al actualizar el vehículo: ', error);
+                        alert('Error al actualizar el vehículo: ' + error.message);
+                    }
+                };
+            } else {
+                console.log('No such document!');
+            }
+        };
+
+        window.deleteVehicle = async (id) => {
+            try {
+                await deleteDoc(doc(db, 'vehiculo', id));
+                alert('Vehículo eliminado exitosamente!');
+                displayVehicles();
+            } catch (error) {
+                console.error('Error al eliminar el vehículo: ', error);
+                alert('Error al eliminar el vehículo: ' + error.message);
+            }
+        };
+
+        window.onload = displayVehicles;
     </script>
 
-
-
-
-
-<style>
-    body {
-        background-image: url(img/fondo1.jpg);
-        background-size: cover; /* Ajusta la imagen para que cubra todo el fondo */
-        background-repeat: no-repeat; /* Evita que la imagen se repita */
-        background-position: center; /* Centra la imagen */
-        background-attachment: fixed; /* Fija la imagen al fondo */
-        margin: 0;
-        font-family: Arial, sans-serif;
-        color: white; /* Cambia el color del texto para que se vea mejor sobre la imagen de fondo */
-    }
-    h1, p {
-        text-align: center;
-        padding: 20px;
-    }
-
-    table {
+    <style>
+        body {
+            background-image: url(img/fondo1.jpg);
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center;
+            background-attachment: fixed;
+            margin: 0;
+            font-family: Arial, sans-serif;
+            color: white;
+        }
+        h1, p, h2 {
+            text-align: center;
+            padding: 20px;
+        }
+        table {
             width: 100%;
             border-collapse: collapse;
             margin: auto;
         }
-        td {
+        td, th {
             padding: 10px;
             text-align: center;
             vertical-align: middle;
         }
-        input[type="text"] {
+        input[type="text"], button {
             width: 80%;
             padding: 5px;
         }
-</style>
-        
+    </style>
 </body>
 </html>
