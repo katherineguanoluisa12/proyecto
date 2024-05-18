@@ -3,55 +3,126 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Matricula</title>
+    <title>Gestión de Vehículos</title>
+    <style>
+        body {
+            background-image: url('img/fondo1.jpg');
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center;
+            background-attachment: fixed;
+            margin: 0;
+            font-family: Arial, sans-serif;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        h1, h2 {
+            text-align: center;
+            padding: 10px;
+            background-color: rgba(0, 0, 0, 0.6);
+            width: 100%;
+        }
+        form {
+            background-color: rgba(0, 0, 0, 0.6);
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            width: 80%;
+            max-width: 800px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: auto;
+            background-color: rgba(0, 0, 0, 0.6);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        td, th {
+            padding: 10px;
+            text-align: center;
+            vertical-align: middle;
+            border: 1px solid white;
+        }
+        input[type="text"], button {
+            width: 90%;
+            padding: 10px;
+            margin: 5px 0;
+            border-radius: 5px;
+            border: none;
+            box-sizing: border-box;
+        }
+        button {
+            width: 45%;
+            padding: 10px;
+            margin: 5px;
+            cursor: pointer;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .centered-form {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+        }
+        .centered-form div {
+            flex: 0 0 48%;
+        }
+    </style>
 </head>
 <body>
-    <h1>----- FORMULARIO DE VEHICULO -----</h1>
-    <center><img src="img/carros.png" alt="" width="10%"></center>
+    <h1>Gestión de Vehículos</h1>
     <form id="form-vehiculo">
-        <table style="width: 100%;">
-            <tr>
-                <td>Ingrese el id del vehiculo: <br><br>
-                    <input type="text" id="id" placeholder="Ingrese el id del vehiculo">
-                </td>
-                <td>Ingrese la marca del vehiculo: <br><br>
-                    <input type="text" id="marca" placeholder="Ingrese la marca del vehiculo">
-                </td>
-            </tr>
-            <tr>
-                <td>Ingrese el modelo del vehiculo: <br><br>
-                    <input type="text" id="modelo" placeholder="Ingrese el modelo del vehiculo">
-                </td>
-                <td>Ingrese año de fabricación del vehiculo: <br><br>
-                    <input type="text" id="ano_fabricacion" placeholder="Ingrese año de fabricación del vehiculo">
-                </td>
-            </tr>
-            <tr>
-                <td>Ingrese la placa del vehiculo: <br><br>
-                    <input type="text" id="placa" placeholder="Ingrese la placa del vehiculo">
-                </td>
-                <td>Ingrese el tipo del vehiculo: <br><br>
-                    <input type="text" id="tipo" placeholder="Ingrese el tipo del vehiculo">
-                </td>
-            </tr>
-            <tr>
-                <td>Ingrese la capacidad de carga del vehiculo: <br><br>
-                    <input type="text" id="capacidad_carga" placeholder="Ingrese la capacidad de carga del vehiculo">
-                </td>
-                <td>Ingrese fecha de adquisición del vehiculo: <br><br>
-                    <input type="text" id="fecha" placeholder="Ingrese fecha de adquisición del vehiculo">
-                </td>
-            </tr>
-            <tr>
-                <td>Ingrese el estado del vehiculo: <br><br>
-                    <input type="text" id="estado" placeholder="Ingrese el estado del vehiculo">
-                </td>
-                <td>Ingrese el kilometraje del vehiculo: <br><br>
-                    <input type="text" id="kilometraje" placeholder="Ingrese el kilometraje del vehiculo">
-                </td>
-            </tr>
-        </table>
-        
+        <div class="centered-form">
+            <div>
+                <label for="id">ID del Vehículo:</label>
+                <input type="text" id="id" placeholder="Ingrese el id del vehiculo">
+            </div>
+            <div>
+                <label for="marca">Marca:</label>
+                <input type="text" id="marca" placeholder="Ingrese la marca del vehiculo">
+            </div>
+            <div>
+                <label for="modelo">Modelo:</label>
+                <input type="text" id="modelo" placeholder="Ingrese el modelo del vehiculo">
+            </div>
+            <div>
+                <label for="ano_fabricacion">Año de Fabricación:</label>
+                <input type="text" id="ano_fabricacion" placeholder="Ingrese año de fabricación del vehiculo">
+            </div>
+            <div>
+                <label for="placa">Placa:</label>
+                <input type="text" id="placa" placeholder="Ingrese la placa del vehiculo">
+            </div>
+            <div>
+                <label for="tipo">Tipo:</label>
+                <input type="text" id="tipo" placeholder="Ingrese el tipo del vehiculo">
+            </div>
+            <div>
+                <label for="capacidad_carga">Capacidad de Carga:</label>
+                <input type="text" id="capacidad_carga" placeholder="Ingrese la capacidad de carga del vehiculo">
+            </div>
+            <div>
+                <label for="fecha">Fecha de Adquisición:</label>
+                <input type="text" id="fecha" placeholder="Ingrese fecha de adquisición del vehiculo">
+            </div>
+            <div>
+                <label for="estado">Estado:</label>
+                <input type="text" id="estado" placeholder="Ingrese el estado del vehiculo">
+            </div>
+            <div>
+                <label for="kilometraje">Kilometraje:</label>
+                <input type="text" id="kilometraje" placeholder="Ingrese el kilometraje del vehiculo">
+            </div>
+        </div>
         <button type="submit">Guardar</button>
     </form>
 
@@ -62,7 +133,7 @@
     </form>
     
     <h2>Listado de Vehículos</h2>
-    <table id="vehiculos-table" border="1" style="width: 100%;">
+    <table id="vehiculos-table" border="1">
         <thead>
             <tr>
                 <th>ID</th>
@@ -84,7 +155,7 @@
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-        import { getFirestore, collection, addDoc, getDocs, updateDoc, deleteDoc, doc, query, where } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+        import { getFirestore, collection, addDoc, getDocs, getDoc, updateDoc, deleteDoc, doc, query, where } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
         const firebaseConfig = {
             apiKey: "AIzaSyDvt5uALq0-Lp4XhG7Y8tjDZD7BOSxP_eI",
@@ -252,6 +323,16 @@
                                 </td>
                             </tr>
                         `;
+                        form.id.value = vehicle.id;
+                        form.marca.value = vehicle.marca;
+                        form.modelo.value = vehicle.modelo;
+                        form.ano_fabricacion.value = vehicle.ano_fabricacion;
+                        form.placa.value = vehicle.placa;
+                        form.tipo.value = vehicle.tipo;
+                        form.capacidad_carga.value = vehicle.capacidad_carga;
+                        form.fecha.value = vehicle.fecha;
+                        form.estado.value = vehicle.estado;
+                        form.kilometraje.value = vehicle.kilometraje;
                     });
                 }
             } catch (error) {
@@ -262,40 +343,5 @@
 
         window.onload = displayVehicles;
     </script>
-
-    <style>
-        body {
-            background-image: url(img/fondo1.jpg);
-            background-size: cover;
-            background-repeat: no-repeat;
-            background-position: center;
-            background-attachment: fixed;
-            margin: 0;
-            font-family: Arial, sans-serif;
-            color: white;
-        }
-        h1, p, h2 {
-            text-align: center;
-            padding: 20px;
-        }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: auto;
-        }
-        td, th {
-            padding: 10px;
-            text-align: center;
-            vertical-align: middle;
-        }
-        input[type="text"], button {
-            width: 80%;
-            padding: 5px;
-        }
-        button {
-            width: 50%;
-            padding: 5px;
-        }
-    </style>
 </body>
 </html>
