@@ -65,6 +65,16 @@
             justify-content: space-between;
             margin-top: 10px;
         }
+        .search-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+        .search-container input {
+            flex: 1;
+            margin-right: 10px;
+        }
     </style>
 </head>
 <body>
@@ -111,14 +121,13 @@
                 <label for="kilometraje">Kilometraje:</label>
                 <input type="text" id="kilometraje" placeholder="Ingrese el kilometraje del vehiculo">
             </div>
-            <div>
-                <label for="buscar">Buscar por Placa:</label>
-                <input type="text" id="buscarPlaca" placeholder="Ingrese la placa del vehiculo">
-            </div>
+        </div>
+        <div class="search-container">
+            <input type="text" id="buscarPlaca" placeholder="Ingrese la placa del vehiculo">
+            <button type="button" id="buscar" onclick="buscarPorPlaca()">Buscar</button>
         </div>
         <div class="action-buttons">
             <button type="submit">Guardar</button>
-            <button type="button" id="buscar" onclick="buscarPorPlaca()">Buscar</button>
             <button type="button" id="editar" onclick="confirmEdit()">Editar</button>
             <button type="button" id="eliminar" onclick="confirmDelete()">Eliminar</button>
         </div>
@@ -309,3 +318,4 @@
     </script>
 </body>
 </html>
+
