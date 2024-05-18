@@ -169,6 +169,8 @@
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
         
+        let currentEditId = null;
+
         const form = document.getElementById('form-vehiculo');
         form.addEventListener('submit', async (e) => {
             e.preventDefault();
@@ -187,7 +189,25 @@
             };
 
             try {
-                await addDoc(collection(db, 'vehiculo'), newVehicle);
+                if (currentEditId) {
+                    await updateDoc(doc(db, 'vehiculo', currentEditId), newVehicle);
+                    currentEditId = null;
+                } else {
+                    const idExists = await idOrPlacaExists('id', newVehicle.id);
+                    const placaExists = await idOrPlacaExists('placa', newVehicle.placa);
+                    
+                    if (idExists) {
+                        alert('El ID ya existe. Por favor, ingrese un ID único.');
+                        return;
+                    }
+                    
+                    if (placaExists) {
+                        alert('La placa ya existe. Por favor, ingrese una placa única.');
+                        return;
+                    }
+
+                    await addDoc(collection(db, 'vehiculo'), newVehicle);
+                }
                 form.reset();
                 alert('Vehículo guardado exitosamente!');
                 displayVehicles();
@@ -196,6 +216,12 @@
                 alert('Error al guardar el vehículo: ' + error.message);
             }
         });
+
+        async function idOrPlacaExists(field, value) {
+            const q = query(collection(db, 'vehiculo'), where(field, '==', value));
+            const querySnapshot = await getDocs(q);
+            return !querySnapshot.empty;
+        }
 
         async function displayVehicles() {
             const vehiculosTableBody = document.querySelector('#vehiculos-table tbody');
@@ -246,30 +272,7 @@
                 form.estado.value = vehicle.estado;
                 form.kilometraje.value = vehicle.kilometraje;
 
-                form.onsubmit = async (e) => {
-                    e.preventDefault();
-
-                    try {
-                        await updateDoc(docRef, {
-                            id: form.id.value,
-                            marca: form.marca.value,
-                            modelo: form.modelo.value,
-                            ano_fabricacion: form.ano_fabricacion.value,
-                            placa: form.placa.value,
-                            tipo: form.tipo.value,
-                            capacidad_carga: form.capacidad_carga.value,
-                            fecha: form.fecha.value,
-                            estado: form.estado.value,
-                            kilometraje: form.kilometraje.value
-                        });
-                        form.reset();
-                        alert('Vehículo actualizado exitosamente!');
-                        displayVehicles();
-                    } catch (error) {
-                        console.error('Error al actualizar el vehículo: ', error);
-                        alert('Error al actualizar el vehículo: ' + error.message);
-                    }
-                };
+                currentEditId = id;
             } else {
                 console.log('No such document!');
             }
@@ -333,6 +336,8 @@
                         form.fecha.value = vehicle.fecha;
                         form.estado.value = vehicle.estado;
                         form.kilometraje.value = vehicle.kilometraje;
+
+                        currentEditId = doc.id;
                     });
                 }
             } catch (error) {
