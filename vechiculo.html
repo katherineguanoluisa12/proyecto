@@ -32,22 +32,17 @@
             width: 80%;
             max-width: 800px;
         }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: auto;
-            background-color: rgba(0, 0, 0, 0.6);
-            border-radius: 10px;
-            overflow: hidden;
+        .centered-form {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
         }
-        td, th {
-            padding: 10px;
-            text-align: center;
-            vertical-align: middle;
-            border: 1px solid white;
+        .centered-form div {
+            flex: 0 0 48%;
+            margin-bottom: 10px;
         }
         input[type="text"], button {
-            width: 90%;
+            width: 100%;
             padding: 10px;
             margin: 5px 0;
             border-radius: 5px;
@@ -55,9 +50,6 @@
             box-sizing: border-box;
         }
         button {
-            width: 45%;
-            padding: 10px;
-            margin: 5px;
             cursor: pointer;
             background-color: #4CAF50;
             color: white;
@@ -68,13 +60,10 @@
         button:hover {
             background-color: #45a049;
         }
-        .centered-form {
+        .action-buttons {
             display: flex;
             justify-content: space-between;
-            flex-wrap: wrap;
-        }
-        .centered-form div {
-            flex: 0 0 48%;
+            margin-top: 10px;
         }
     </style>
 </head>
@@ -122,16 +111,17 @@
                 <label for="kilometraje">Kilometraje:</label>
                 <input type="text" id="kilometraje" placeholder="Ingrese el kilometraje del vehiculo">
             </div>
+            <div>
+                <button type="button" onclick="buscarPorPlaca()">Buscar por Placa</button>
+            </div>
         </div>
-        <button type="submit">Guardar</button>
+        <div class="action-buttons">
+            <button type="submit">Guardar</button>
+            <button type="button" id="editar" onclick="confirmEdit()">Editar</button>
+            <button type="button" id="eliminar" onclick="confirmDelete()">Eliminar</button>
+        </div>
     </form>
 
-    <h2>Búsqueda de Vehículos</h2>
-    <form id="form-busqueda">
-        <input type="text" id="busqueda-placa" placeholder="Ingrese la placa del vehiculo">
-        <button type="button" onclick="buscarPorPlaca()">Buscar</button>
-    </form>
-    
     <h2>Listado de Vehículos</h2>
     <table id="vehiculos-table" border="1">
         <thead>
@@ -146,7 +136,6 @@
                 <th>Fecha</th>
                 <th>Estado</th>
                 <th>Kilometraje</th>
-                <th>Acciones</th>
             </tr>
         </thead>
         <tbody>
@@ -165,10 +154,10 @@
             messagingSenderId: "61014179644",
             appId: "1:61014179644:web:7d13477e77a85ac55ee839"
         };
-      
+
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
-        
+
         let currentEditId = null;
 
         const form = document.getElementById('form-vehiculo');
@@ -195,12 +184,12 @@
                 } else {
                     const idExists = await idOrPlacaExists('id', newVehicle.id);
                     const placaExists = await idOrPlacaExists('placa', newVehicle.placa);
-                    
+
                     if (idExists) {
                         alert('El ID ya existe. Por favor, ingrese un ID único.');
                         return;
                     }
-                    
+
                     if (placaExists) {
                         alert('La placa ya existe. Por favor, ingrese una placa única.');
                         return;
@@ -243,10 +232,6 @@
                             <td>${vehicle.fecha}</td>
                             <td>${vehicle.estado}</td>
                             <td>${vehicle.kilometraje}</td>
-                            <td>
-                                <button onclick="editVehicle('${doc.id}')">Editar</button>
-                                <button onclick="deleteVehicle('${doc.id}')">Eliminar</button>
-                            </td>
                         </tr>
                     `;
                 });
@@ -255,45 +240,8 @@
             }
         }
 
-        window.editVehicle = async (id) => {
-            const docRef = doc(db, 'vehiculo', id);
-            const docSnap = await getDoc(docRef);
-
-            if (docSnap.exists()) {
-                const vehicle = docSnap.data();
-                form.id.value = vehicle.id;
-                form.marca.value = vehicle.marca;
-                form.modelo.value = vehicle.modelo;
-                form.ano_fabricacion.value = vehicle.ano_fabricacion;
-                form.placa.value = vehicle.placa;
-                form.tipo.value = vehicle.tipo;
-                form.capacidad_carga.value = vehicle.capacidad_carga;
-                form.fecha.value = vehicle.fecha;
-                form.estado.value = vehicle.estado;
-                form.kilometraje.value = vehicle.kilometraje;
-
-                currentEditId = id;
-            } else {
-                console.log('No such document!');
-            }
-        };
-
-        window.deleteVehicle = async (id) => {
-            try {
-                await deleteDoc(doc(db, 'vehiculo', id));
-                alert('Vehículo eliminado exitosamente!');
-                displayVehicles();
-            } catch (error) {
-                console.error('Error al eliminar el vehículo: ', error);
-                alert('Error al eliminar el vehículo: ' + error.message);
-            }
-        };
-
         window.buscarPorPlaca = async () => {
-            const placa = document.getElementById('busqueda-placa').value;
-            const vehiculosTableBody = document.querySelector('#vehiculos-table tbody');
-            vehiculosTableBody.innerHTML = '';
-
+            const placa = form.placa.value;
             if (!placa) {
                 alert('Ingrese una placa para buscar');
                 return;
@@ -305,27 +253,11 @@
 
                 if (querySnapshot.empty) {
                     alert('No se encontraron vehículos con esa placa');
+                    form.reset();
+                    currentEditId = null;
                 } else {
                     querySnapshot.forEach((doc) => {
                         const vehicle = doc.data();
-                        vehiculosTableBody.innerHTML += `
-                            <tr>
-                                <td>${vehicle.id}</td>
-                                <td>${vehicle.marca}</td>
-                                <td>${vehicle.modelo}</td>
-                                <td>${vehicle.ano_fabricacion}</td>
-                                <td>${vehicle.placa}</td>
-                                <td>${vehicle.tipo}</td>
-                                <td>${vehicle.capacidad_carga}</td>
-                                <td>${vehicle.fecha}</td>
-                                <td>${vehicle.estado}</td>
-                                <td>${vehicle.kilometraje}</td>
-                                <td>
-                                    <button onclick="editVehicle('${doc.id}')">Editar</button>
-                                    <button onclick="deleteVehicle('${doc.id}')">Eliminar</button>
-                                </td>
-                            </tr>
-                        `;
                         form.id.value = vehicle.id;
                         form.marca.value = vehicle.marca;
                         form.modelo.value = vehicle.modelo;
@@ -343,6 +275,31 @@
             } catch (error) {
                 console.error('Error al buscar el vehículo: ', error);
                 alert('Error al buscar el vehículo: ' + error.message);
+            }
+        };
+
+        window.confirmEdit = async () => {
+            if (currentEditId) {
+                form.dispatchEvent(new Event('submit'));
+            } else {
+                alert('No hay ningún vehículo seleccionado para editar.');
+            }
+        };
+
+        window.confirmDelete = async () => {
+            if (currentEditId) {
+                try {
+                    await deleteDoc(doc(db, 'vehiculo', currentEditId));
+                    alert('Vehículo eliminado exitosamente!');
+                    form.reset();
+                    currentEditId = null;
+                    displayVehicles();
+                } catch (error) {
+                    console.error('Error al eliminar el vehículo: ', error);
+                    alert('Error al eliminar el vehículo: ' + error.message);
+                }
+            } else {
+                alert('No hay ningún vehículo seleccionado para eliminar.');
             }
         };
 
