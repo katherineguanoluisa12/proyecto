@@ -54,6 +54,12 @@
         
         <button type="submit">Guardar</button>
     </form>
+
+    <h2>Búsqueda de Vehículos</h2>
+    <form id="form-busqueda">
+        <input type="text" id="busqueda-placa" placeholder="Ingrese la placa del vehiculo">
+        <button type="button" onclick="buscarPorPlaca()">Buscar</button>
+    </form>
     
     <h2>Listado de Vehículos</h2>
     <table id="vehiculos-table" border="1" style="width: 100%;">
@@ -78,7 +84,7 @@
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-        import { getFirestore, collection, addDoc, getDocs, updateDoc, deleteDoc, doc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+        import { getFirestore, collection, addDoc, getDocs, updateDoc, deleteDoc, doc, query, where } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
         const firebaseConfig = {
             apiKey: "AIzaSyDvt5uALq0-Lp4XhG7Y8tjDZD7BOSxP_eI",
@@ -209,6 +215,51 @@
             }
         };
 
+        window.buscarPorPlaca = async () => {
+            const placa = document.getElementById('busqueda-placa').value;
+            const vehiculosTableBody = document.querySelector('#vehiculos-table tbody');
+            vehiculosTableBody.innerHTML = '';
+
+            if (!placa) {
+                alert('Ingrese una placa para buscar');
+                return;
+            }
+
+            try {
+                const q = query(collection(db, 'vehiculo'), where('placa', '==', placa));
+                const querySnapshot = await getDocs(q);
+
+                if (querySnapshot.empty) {
+                    alert('No se encontraron vehículos con esa placa');
+                } else {
+                    querySnapshot.forEach((doc) => {
+                        const vehicle = doc.data();
+                        vehiculosTableBody.innerHTML += `
+                            <tr>
+                                <td>${vehicle.id}</td>
+                                <td>${vehicle.marca}</td>
+                                <td>${vehicle.modelo}</td>
+                                <td>${vehicle.ano_fabricacion}</td>
+                                <td>${vehicle.placa}</td>
+                                <td>${vehicle.tipo}</td>
+                                <td>${vehicle.capacidad_carga}</td>
+                                <td>${vehicle.fecha}</td>
+                                <td>${vehicle.estado}</td>
+                                <td>${vehicle.kilometraje}</td>
+                                <td>
+                                    <button onclick="editVehicle('${doc.id}')">Editar</button>
+                                    <button onclick="deleteVehicle('${doc.id}')">Eliminar</button>
+                                </td>
+                            </tr>
+                        `;
+                    });
+                }
+            } catch (error) {
+                console.error('Error al buscar el vehículo: ', error);
+                alert('Error al buscar el vehículo: ' + error.message);
+            }
+        };
+
         window.onload = displayVehicles;
     </script>
 
@@ -239,6 +290,10 @@
         }
         input[type="text"], button {
             width: 80%;
+            padding: 5px;
+        }
+        button {
+            width: 50%;
             padding: 5px;
         }
     </style>
