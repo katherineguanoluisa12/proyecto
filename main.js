@@ -10,8 +10,7 @@ const firebaseConfig = {
     storageBucket: "vehiculo-b415f.appspot.com",
     messagingSenderId: "61014179644",
     appId: "1:61014179644:web:7d13477e77a85ac55ee839"
-  };
-
+};
 // Inicializar Firebase
 const app = initializeApp(firebaseConfig);
 const firestore = getFirestore(app); // Obtén la instancia de Firestore
