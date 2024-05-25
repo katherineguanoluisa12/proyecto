@@ -1,6 +1,7 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-app.js";
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, signInWithPopup, GoogleAuthProvider } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-auth.js";
 import { getFirestore } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-firestore.js";
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, sendEmailVerification, GoogleAuthProvider, signInWithPopup } from "https://www.gstatic.com/firebasejs/10.12.1/firebase-auth.js";
 
 // Tu configuración de Firebase
 const firebaseConfig = {
@@ -85,4 +86,12 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 });
+
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const provider  = new GoogleAuthProvider();
+//Iniciar Sesión
+const googleLog = document.getElementById("inicioGoogle");
+//LOGUEO CON GOOGLE
 
