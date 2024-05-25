@@ -37,3 +37,27 @@ document.addEventListener('DOMContentLoaded', () => {
             });
     });
 });
+
+document.addEventListener('DOMContentLoaded', () => {
+    const signinForm = document.querySelector('#iniciar-form');
+    signinForm.addEventListener('submit', e => {
+        e.preventDefault();
+
+        const email = document.querySelector('#iniciar-email').value;
+        const password = document.querySelector('#iniciar-password').value;
+
+        auth.signInWithEmailAndPassword(email, password)
+            .then(userCredential => {
+                // Limpiar el formulario
+                signinForm.reset();
+                // Cerrar el modal
+                $('#iniciarModal').modal('hide');
+                console.log('Inicio de sesión exitoso');
+            })
+            .catch(error => {
+                console.error('Error al iniciar sesión:', error);
+                alert('Error al iniciar sesión. Por favor, verifica tus credenciales e intenta nuevamente.');
+            });
+    });
+});
+
