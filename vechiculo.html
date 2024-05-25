@@ -1,101 +1,324 @@
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-app.js";
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, signInWithPopup, GoogleAuthProvider } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-auth.js";
-import { getFirestore } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-firestore.js";
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestión de Vehículos</title>
+    <style>
+        body {
+            background-image: url('img/fondo1.jpg');
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center;
+            background-attachment: fixed;
+            margin: 0;
+            font-family: Arial, sans-serif;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        h1, h2 {
+            text-align: center;
+            padding: 10px;
+            background-color: rgba(0, 0, 0, 0.6);
+            width: 100%;
+        }
+        form {
+            background-color: rgba(0, 0, 0, 0.6);
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            width: 80%;
+            max-width: 800px;
+        }
+        .centered-form {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+        }
+        .centered-form div {
+            flex: 0 0 48%;
+            margin-bottom: 10px;
+        }
+        input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            margin: 5px 0;
+            border-radius: 5px;
+            border: none;
+            box-sizing: border-box;
+        }
+        button {
+            cursor: pointer;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+            padding: 8px 15px;
+            font-size: 14px;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .action-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 10px;
+        }
+        .search-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+        .search-container input {
+            flex: 1;
+            margin-right: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Gestión de Vehículos</h1>
+    <form id="form-vehiculo">
+        <div class="centered-form">
+            <div>
+                <label for="id">ID del Vehículo:</label>
+                <input type="text" id="id" placeholder="Ingrese el id del vehiculo">
+            </div>
+            <div>
+                <label for="marca">Marca:</label>
+                <input type="text" id="marca" placeholder="Ingrese la marca del vehiculo">
+            </div>
+            <div>
+                <label for="modelo">Modelo:</label>
+                <input type="text" id="modelo" placeholder="Ingrese el modelo del vehiculo">
+            </div>
+            <div>
+                <label for="ano_fabricacion">Año de Fabricación:</label>
+                <input type="text" id="ano_fabricacion" placeholder="Ingrese año de fabricación del vehiculo">
+            </div>
+            <div>
+                <label for="placa">Placa:</label>
+                <input type="text" id="placa" placeholder="Ingrese la placa del vehiculo">
+            </div>
+            <div>
+                <label for="tipo">Tipo:</label>
+                <input type="text" id="tipo" placeholder="Ingrese el tipo del vehiculo">
+            </div>
+            <div>
+                <label for="capacidad_carga">Capacidad de Carga:</label>
+                <input type="text" id="capacidad_carga" placeholder="Ingrese la capacidad de carga del vehiculo">
+            </div>
+            <div>
+                <label for="fecha">Fecha de Adquisición:</label>
+                <input type="text" id="fecha" placeholder="Ingrese fecha de adquisición del vehiculo">
+            </div>
+            <div>
+                <label for="estado">Estado:</label>
+                <input type="text" id="estado" placeholder="Ingrese el estado del vehiculo">
+            </div>
+            <div>
+                <label for="kilometraje">Kilometraje:</label>
+                <input type="text" id="kilometraje" placeholder="Ingrese el kilometraje del vehiculo">
+            </div>
+        </div>
+        <div class="search-container">
+            <input type="text" id="buscarPlaca" placeholder="Ingrese la placa del vehiculo">
+            <button type="button" id="buscar" onclick="buscarPorPlaca()">Buscar</button>
+        </div>
+        <div class="action-buttons">
+            <button type="submit">Guardar</button>
+            <button type="button" id="editar" onclick="confirmEdit()">Editar</button>
+            <button type="button" id="eliminar" onclick="confirmDelete()">Eliminar</button>
+            <a href="index.html"><button type="button" id="eliminar">Salir</button></a>
+        </div>
+    </form>
 
-// Tu configuración de Firebase
-const firebaseConfig = {
-    apiKey: "AIzaSyDvt5uALq0-Lp4XhG7Y8tjDZD7BOSxP_eI",
-    authDomain: "vehiculo-b415f.firebaseapp.com",
-    projectId: "vehiculo-b415f",
-    storageBucket: "vehiculo-b415f.appspot.com",
-    messagingSenderId: "61014179644",
-    appId: "1:61014179644:web:7d13477e77a85ac55ee839"
-};
+    <h2>Listado de Vehículos</h2>
+    <table id="vehiculos-table" border="1">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Marca</th>
+                <th>Modelo</th>
+                <th>Año</th>
+                <th>Placa</th>
+                <th>Tipo</th>
+                <th>Capacidad de Carga</th>
+                <th>Fecha</th>
+                <th>Estado</th>
+                <th>Kilometraje</th>
+            </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
 
-// Inicializar Firebase
-const app = initializeApp(firebaseConfig);
-const firestore = getFirestore(app); // Obtén la instancia de Firestore
-const auth = getAuth(app); // Obtén la instancia de autenticación
-const provider = new GoogleAuthProvider(); // Proveedor de Google para autenticación
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+        import { getFirestore, collection, addDoc, getDocs, getDoc, updateDoc, deleteDoc, doc, query, where } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
-console.log("Conexión a Firebase establecida correctamente.");
+        const firebaseConfig = {
+            apiKey: "AIzaSyDvt5uALq0-Lp4XhG7Y8tjDZD7BOSxP_eI",
+            authDomain: "vehiculo-b415f.firebaseapp.com",
+            projectId: "vehiculo-b415f",
+            storageBucket: "vehiculo-b415f.appspot.com",
+            messagingSenderId: "61014179644",
+            appId: "1:61014179644:web:7d13477e77a85ac55ee839"
+        };
 
-document.addEventListener('DOMContentLoaded', () => {
-    // Registrar Usuario
-    const registrarForm = document.querySelector('#registrarse-form');
-    registrarForm.addEventListener('submit', (e) => {
-        e.preventDefault();
-        const email = document.querySelector('#registrar-email').value;
-        const password = document.querySelector('#registrar-password').value;
-        console.log('Email:', email, 'Password:', password);
-        createUserWithEmailAndPassword(auth, email, password)
-            .then(userCredential => {
-                console.log('Usuario registrado:', userCredential.user);
-                registrarForm.reset();
-                $('#registrarModal').modal('hide');
-            })
-            .catch(error => {
-                console.error('Error al registrar el usuario:', error);
-                alert('Error al registrar el usuario. Por favor, verifica tus datos e intenta nuevamente.');
-            });
-    });
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
 
-    // Iniciar Sesión con Email y Password
-    const signinForm = document.querySelector('#iniciar-form');
-    signinForm.addEventListener('submit', e => {
-        e.preventDefault();
-        const email = document.querySelector('#iniciar-email').value;
-        const password = document.querySelector('#iniciar-password').value;
-        console.log('Email:', email, 'Password:', password);
-        signInWithEmailAndPassword(auth, email, password)
-            .then(userCredential => {
-                console.log('Usuario inició sesión:', userCredential.user);
-                window.location.href = 'vehiculo.html'; // Redirigir a vehiculo.html después de iniciar sesión
-            })
-            .catch(error => {
-                console.error('Error al iniciar sesión:', error);
-                alert('Error al iniciar sesión. Por favor, verifica tus credenciales e intenta nuevamente.');
-            });
-    });
+        let currentEditId = null;
 
-    // Iniciar Sesión con Google
-    const googleSignInButton = document.querySelector('#google-signin');
-    googleSignInButton.addEventListener('click', e => {
-        e.preventDefault();
-        signInWithPopup(auth, provider)
-            .then((result) => {
-                console.log('Usuario inició sesión con Google:', result.user);
-                window.location.href = 'vehiculo.html'; // Redirigir a vehiculo.html después de iniciar sesión
-            })
-            .catch((error) => {
-                console.error('Error al iniciar sesión con Google:', error);
-                alert('Error al iniciar sesión con Google. Por favor, intenta nuevamente.');
-            });
-    });
+        const form = document.getElementById('form-vehiculo');
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
 
-    // Cerrar Sesión
-    const logout = document.querySelector('#salir');
-    logout.addEventListener('click', (e) => {
-        e.preventDefault();
-        signOut(auth).then(() => {
-            console.log('Usuario cerró sesión');
-            window.location.href = 'index.html'; // Redirigir a la página principal después de cerrar sesión
-        }).catch((error) => {
-            console.error('Error al cerrar sesión:', error);
+            const newVehicle = {
+                id: form.id.value,
+                marca: form.marca.value,
+                modelo: form.modelo.value,
+                ano_fabricacion: form.ano_fabricacion.value,
+                placa: form.placa.value,
+                tipo: form.tipo.value,
+                capacidad_carga: form.capacidad_carga.value,
+                fecha: form.fecha.value,
+                estado: form.estado.value,
+                kilometraje: form.kilometraje.value
+            };
+
+            try {
+                if (currentEditId) {
+                    await updateDoc(doc(db, 'vehiculo', currentEditId), newVehicle);
+                    currentEditId = null;
+                } else {
+                    const idExists = await idOrPlacaExists('id', newVehicle.id);
+                    const placaExists = await idOrPlacaExists('placa', newVehicle.placa);
+
+                    if (idExists) {
+                        alert('El ID ya existe. Por favor, ingrese un ID único.');
+                        return;
+                    }
+
+                    if (placaExists) {
+                        alert('La placa ya existe. Por favor, ingrese una placa única.');
+                        return;
+                    }
+
+                    await addDoc(collection(db, 'vehiculo'), newVehicle);
+                }
+                form.reset();
+                alert('Vehículo guardado exitosamente!');
+                displayVehicles();
+            } catch (error) {
+                console.error('Error al guardar el vehículo: ', error);
+                alert('Error al guardar el vehículo: ' + error.message);
+            }
         });
-    });
-});
-const express = require('express');
-const app = express();
 
-app.use((req, res, next) => {
-    res.setHeader('Cross-Origin-Opener-Policy', 'same-origin');
-    res.setHeader('Cross-Origin-Embedder-Policy', 'require-corp');
-    next();
-});
+        async function idOrPlacaExists(field, value) {
+            const q = query(collection(db, 'vehiculo'), where(field, '==', value));
+            const querySnapshot = await getDocs(q);
+            return !querySnapshot.empty;
+        }
 
-app.use(express.static('public')); // Asumiendo que tus archivos están en la carpeta 'public'
+        async function displayVehicles() {
+            const vehiculosTableBody = document.querySelector('#vehiculos-table tbody');
+            vehiculosTableBody.innerHTML = '';
 
-app.listen(3000, () => {
-    console.log('Server running on http://localhost:3000');
-});
+            try {
+                const querySnapshot = await getDocs(collection(db, 'vehiculo'));
+                querySnapshot.forEach((doc) => {
+                    const vehicle = doc.data();
+                    vehiculosTableBody.innerHTML += `
+                        <tr>
+                            <td>${vehicle.id}</td>
+                            <td>${vehicle.marca}</td>
+                            <td>${vehicle.modelo}</td>
+                            <td>${vehicle.ano_fabricacion}</td>
+                            <td>${vehicle.placa}</td>
+                            <td>${vehicle.tipo}</td>
+                            <td>${vehicle.capacidad_carga}</td>
+                            <td>${vehicle.fecha}</td>
+                            <td>${vehicle.estado}</td>
+                            <td>${vehicle.kilometraje}</td>
+                        </tr>
+                    `;
+                });
+            } catch (error) {
+                console.error('Error al obtener los vehículos: ', error);
+            }
+        }
+
+        window.buscarPorPlaca = async () => {
+            const placa = form.buscarPlaca.value;
+            if (!placa) {
+                alert('Ingrese una placa para buscar');
+                return;
+            }
+
+            try {
+                const q = query(collection(db, 'vehiculo'), where('placa', '==', placa));
+                const querySnapshot = await getDocs(q);
+
+                if (querySnapshot.empty) {
+                    alert('No se encontraron vehículos con esa placa');
+                    form.reset();
+                    currentEditId = null;
+                } else {
+                    querySnapshot.forEach((doc) => {
+                        const vehicle = doc.data();
+                        form.id.value = vehicle.id;
+                        form.marca.value = vehicle.marca;
+                        form.modelo.value = vehicle.modelo;
+                        form.ano_fabricacion.value = vehicle.ano_fabricacion;
+                        form.placa.value = vehicle.placa;
+                        form.tipo.value = vehicle.tipo;
+                        form.capacidad_carga.value = vehicle.capacidad_carga;
+                        form.fecha.value = vehicle.fecha;
+                        form.estado.value = vehicle.estado;
+                        form.kilometraje.value = vehicle.kilometraje;
+
+                        currentEditId = doc.id;
+                    });
+                }
+            } catch (error) {
+                console.error('Error al buscar el vehículo: ', error);
+                alert('Error al buscar el vehículo: ' + error.message);
+            }
+        };
+
+        window.confirmEdit = async () => {
+            if (currentEditId) {
+                form.dispatchEvent(new Event('submit'));
+            } else {
+                alert('No hay ningún vehículo seleccionado para editar.');
+            }
+        };
+
+        window.confirmDelete = async () => {
+            if (currentEditId) {
+                try {
+                    await deleteDoc(doc(db, 'vehiculo', currentEditId));
+                    alert('Vehículo eliminado exitosamente!');
+                    form.reset();
+                    currentEditId = null;
+                    displayVehicles();
+                } catch (error) {
+                    console.error('Error al eliminar el vehículo: ', error);
+                    alert('Error al eliminar el vehículo: ' + error.message);
+                }
+            } else {
+                alert('No hay ningún vehículo seleccionado para eliminar.');
+            }
+        };
+
+        window.onload = displayVehicles;
+    </script>
+</body>
+</html>
+
