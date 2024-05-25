@@ -17,7 +17,7 @@
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Iniciar sesión</a>
+                    <a class="nav-link" href="#" data-toggle="modal" data-target="#iniciarModal">Iniciar sesión</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#" data-toggle="modal" data-target="#registrarModal">Registrarse</a>
@@ -54,22 +54,38 @@
         </div>
     </div>
 
-    <!-- Formulario de Inicio de Sesión -->
-    <form id="iniciar-form">
-        <div class="form-group">
-            <input type="email" id="iniciar-email" class="form-control" placeholder="Email" required>
+    <!-- Modal de Inicio de Sesión -->
+    <div class="modal fade" id="iniciarModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Iniciar Sesión</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="iniciar-form">
+                        <div class="form-group">
+                            <input type="email" id="iniciar-email" class="form-control" placeholder="Email" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="password" id="iniciar-password" class="form-control" placeholder="Password" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Iniciar Sesión</button>
+                    </form>
+                </div>
+            </div>
         </div>
-        <div class="form-group">
-            <input type="password" id="iniciar-password" class="form-control" placeholder="Password" required>
-        </div>
-        <button type="submit" class="btn btn-primary">Iniciar Sesión</button>
-    </form>
+    </div>
 
     <!-- Botón de Inicio de Sesión con Google -->
-    <button id="google-signin" class="btn btn-danger">Iniciar sesión con Google</button>
+    <div style="text-align: center; margin: 20px;">
+        <button id="google-signin" class="btn btn-danger">Iniciar sesión con Google</button>
+    </div>
 
-    <h1 style="color: beige;">----- **Bienvenido -----</h1>
-    <h1 style="color: beige;">----- MATRICULA VEHICULAR ONLINE -----</h1>
+    <h1 style="color: beige; text-align: center;">----- Bienvenido -----</h1>
+    <h1 style="color: beige; text-align: center;">----- MATRICULA VEHICULAR ONLINE -----</h1>
     <div style="text-align: center;">
         <img src="img/carros.png" alt="" width="10%">
     </div>
@@ -92,90 +108,3 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/js/bootstrap.min.js"></script>
 </body>
 </html>
-en main esto import { initializeApp } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-app.js";
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, signInWithPopup, GoogleAuthProvider } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-auth.js";
-import { getFirestore } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-firestore.js";
-
-// Tu configuración de Firebase
-const firebaseConfig = {
-    apiKey: "AIzaSyDvt5uALq0-Lp4XhG7Y8tjDZD7BOSxP_eI",
-    authDomain: "vehiculo-b415f.firebaseapp.com",
-    projectId: "vehiculo-b415f",
-    storageBucket: "vehiculo-b415f.appspot.com",
-    messagingSenderId: "61014179644",
-    appId: "1:61014179644:web:7d13477e77a85ac55ee839"
-};
-
-// Inicializar Firebase
-const app = initializeApp(firebaseConfig);
-const firestore = getFirestore(app); // Obtén la instancia de Firestore
-const auth = getAuth(app); // Obtén la instancia de autenticación
-const provider = new GoogleAuthProvider(); // Proveedor de Google para autenticación
-
-console.log("Conexión a Firebase establecida correctamente.");
-
-document.addEventListener('DOMContentLoaded', () => {
-    // Registrar Usuario
-    const registrarForm = document.querySelector('#registrarse-form');
-    registrarForm.addEventListener('submit', (e) => {
-        e.preventDefault();
-        const email = document.querySelector('#registrar-email').value;
-        const password = document.querySelector('#registrar-password').value;
-        console.log('Email:', email, 'Password:', password);
-        createUserWithEmailAndPassword(auth, email, password)
-            .then(userCredential => {
-                console.log('Usuario registrado:', userCredential.user);
-                registrarForm.reset();
-                $('#registrarModal').modal('hide');
-            })
-            .catch(error => {
-                console.error('Error al registrar el usuario:', error);
-                alert('Error al registrar el usuario. Por favor, verifica tus datos e intenta nuevamente.');
-            });
-    });
-
-    // Iniciar Sesión con Email y Password
-    const signinForm = document.querySelector('#iniciar-form');
-    signinForm.addEventListener('submit', e => {
-        e.preventDefault();
-        const email = document.querySelector('#iniciar-email').value;
-        const password = document.querySelector('#iniciar-password').value;
-        console.log('Email:', email, 'Password:', password);
-        signInWithEmailAndPassword(auth, email, password)
-            .then(userCredential => {
-                console.log('Usuario inició sesión:', userCredential.user);
-                window.location.href = 'vechiculo.html'; // Redirigir a vehiculo.html después de iniciar sesión
-            })
-            .catch(error => {
-                console.error('Error al iniciar sesión:', error);
-                alert('Error al iniciar sesión. Por favor, verifica tus credenciales e intenta nuevamente.');
-            });
-    });
-
-    // Iniciar Sesión con Google
-    const googleSignInButton = document.querySelector('#google-signin');
-    googleSignInButton.addEventListener('click', e => {
-        e.preventDefault();
-        signInWithPopup(auth, provider)
-            .then((result) => {
-                console.log('Usuario inició sesión con Google:', result.user);
-                window.location.href = 'vechiculo.html'; // Redirigir a vehiculo.html después de iniciar sesión
-            })
-            .catch((error) => {
-                console.error('Error al iniciar sesión con Google:', error);
-                alert('Error al iniciar sesión con Google. Por favor, intenta nuevamente.');
-            });
-    });
-
-    // Cerrar Sesión
-    const logout = document.querySelector('#salir');
-    logout.addEventListener('click', (e) => {
-        e.preventDefault();
-        signOut(auth).then(() => {
-            console.log('Usuario cerró sesión');
-            window.location.href = 'index.html'; // Redirigir a la página principal después de cerrar sesión
-        }).catch((error) => {
-            console.error('Error al cerrar sesión:', error);
-        });
-    });
-});
