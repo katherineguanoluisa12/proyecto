@@ -1,3 +1,5 @@
+import { signInWithPopup } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-auth.js";
+
 document.addEventListener('DOMContentLoaded', () => {
     // Registrar Usuario
     const registrarForm = document.querySelector('#registrarse-form');
