@@ -31,7 +31,6 @@ document.addEventListener('DOMContentLoaded', () => {
         createUserWithEmailAndPassword(auth, email, password)
             .then(userCredential => {
                 console.log('Usuario registrado:', userCredential.user);
-                console.log('Correo electrónico:', userCredential.user.email); // Ver el correo electrónico del usuario
                 registrarForm.reset();
                 $('#registrarModal').modal('hide');
             })
@@ -51,8 +50,7 @@ document.addEventListener('DOMContentLoaded', () => {
         signInWithEmailAndPassword(auth, email, password)
             .then(userCredential => {
                 console.log('Usuario inició sesión:', userCredential.user);
-                console.log('Correo electrónico:', userCredential.user.email); // Ver el correo electrónico del usuario
-                window.location.href = 'vehiculo.html'; // Redirigir a vehiculo.html después de iniciar sesión
+                window.location.href = 'vechiculo.html'; // Redirigir a vehiculo.html después de iniciar sesión
             })
             .catch(error => {
                 console.error('Error al iniciar sesión:', error);
@@ -67,8 +65,7 @@ document.addEventListener('DOMContentLoaded', () => {
         signInWithPopup(auth, provider)
             .then((result) => {
                 console.log('Usuario inició sesión con Google:', result.user);
-                console.log('Correo electrónico:', result.user.email); // Ver el correo electrónico del usuario
-                window.location.href = 'vehiculo.html'; // Redirigir a vehiculo.html después de iniciar sesión
+                window.location.href = 'vechiculo.html'; // Redirigir a vehiculo.html después de iniciar sesión
             })
             .catch((error) => {
                 console.error('Error al iniciar sesión con Google:', error);
@@ -88,3 +85,4 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 });
+
