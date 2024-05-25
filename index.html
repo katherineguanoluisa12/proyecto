@@ -3,101 +3,179 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gestión de Vehículos</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
-    <style>
-        body {
-            background-image: url('img/fondo1.jpg');
-            background-size: cover;
-            background-repeat: no-repeat;
-            background-position: center;
-            background-attachment: fixed;
-            color: white;
-        }
-        .modal-content {
-            background-color: rgba(0, 0, 0, 0.8);
-            color: white;
-        }
-        .btn-google {
-            background-color: white;
-            color: black;
-        }
-    </style>
+    <title>Matricula</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/css/bootstrap.min.css">
+    <script src="main.js" type="module"></script>
 </head>
+
 <body>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <a class="navbar-brand" href="#">Gestión de Vehículos</a>
+        <a class="navbar-brand" href="#">Vehiculo</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav">
-                <li class="nav-item active">
-                    <a class="nav-link" href="#">Inicio <span class="sr-only">(current)</span></a>
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Iniciar sesión</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="vehiculo.html">Gestión de Vehículos</a>
+                    <a class="nav-link" href="#" data-toggle="modal" data-target="#registrarModal">Registrarse</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#" id="salir">Salir</a>
                 </li>
             </ul>
         </div>
     </nav>
 
-    <h1 class="text-center mt-5">Bienvenido a la Gestión de Vehículos</h1>
-
-    <!-- Button trigger modal -->
-    <div class="text-center mt-5">
-        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#loginModal">
-            Iniciar Sesión
-        </button>
-    </div>
-
-    <!-- Modal -->
-    <div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="loginModalLabel" aria-hidden="true">
+    <!-- Modal de Registro -->
+    <div class="modal fade" id="registrarModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="loginModalLabel">Iniciar Sesión</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Registrarse</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body">
-                    <button type="button" class="btn btn-google" id="loginGoogle">Iniciar sesión con Google</button>
+                    <form id="registrarse-form">
+                        <div class="form-group">
+                            <input type="email" id="registrar-email" class="form-control" placeholder="Email" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="password" id="registrar-password" class="form-control" placeholder="Password" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Registrar</button>
+                    </form>
                 </div>
             </div>
         </div>
     </div>
 
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.3/dist/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIyk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+    <!-- Formulario de Inicio de Sesión -->
+    <form id="iniciar-form">
+        <div class="form-group">
+            <input type="email" id="iniciar-email" class="form-control" placeholder="Email" required>
+        </div>
+        <div class="form-group">
+            <input type="password" id="iniciar-password" class="form-control" placeholder="Password" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Iniciar Sesión</button>
+    </form>
 
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-        import { getAuth, signInWithPopup, GoogleAuthProvider } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+    <!-- Botón de Inicio de Sesión con Google -->
+    <button id="google-signin" class="btn btn-danger">Iniciar sesión con Google</button>
 
-        const firebaseConfig = {
-            apiKey: "YOUR_API_KEY",
-            authDomain: "YOUR_AUTH_DOMAIN",
-            projectId: "YOUR_PROJECT_ID",
-            storageBucket: "YOUR_STORAGE_BUCKET",
-            messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
-            appId: "YOUR_APP_ID"
-        };
+    <h1 style="color: beige;">----- **Bienvenido -----</h1>
+    <h1 style="color: beige;">----- MATRICULA VEHICULAR ONLINE -----</h1>
+    <div style="text-align: center;">
+        <img src="img/carros.png" alt="" width="10%">
+    </div>
+    <table style="width: 100%;">
+        <tr>
+            <th style="background-color: black; color: white; text-align: center;">
+                <h1>Misión</h1>
+                <p>Prevenir y controlar los accidentes de tránsito, colaborando con los organismos responsables en la reducción de la tasa de mortalidad y morbilidad ocasionada por los mismos, a través de la utilización de medios tecnológicos modernos, vigilancia, control y monitoreo del tránsito vehicular, y la ejecución de programas de educación y concientización vial.</p>
+            </th>
+            <th style="background-color: black; color: white; text-align: center;">
+                <h1>Visión</h1>
+                <p>Ser un ente de referencia en la regulación, vigilancia y control del tránsito terrestre en el ámbito nacional e internacional, con capacidad de integrar esfuerzos y recursos de los sectores públicos y privados, y de la sociedad civil, orientados a garantizar la seguridad vial y la convivencia ciudadana en las vías públicas.</p>
+            </th>
+        </tr>
+    </table>
 
-        const app = initializeApp(firebaseConfig);
-        const auth = getAuth(app);
-        const provider = new GoogleAuthProvider();
-
-        document.getElementById('loginGoogle').addEventListener('click', () => {
-            signInWithPopup(auth, provider)
-                .then((result) => {
-                    window.location.href = 'vehiculo.html';
-                })
-                .catch((error) => {
-                    console.error("Error during sign in:", error);
-                });
-        });
-    </script>
+    <!-- Bootstrap JS y Popper.js -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.3/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/js/bootstrap.min.js"></script>
 </body>
 </html>
+en main esto import { initializeApp } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-app.js";
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, signInWithPopup, GoogleAuthProvider } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-auth.js";
+import { getFirestore } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-firestore.js";
+
+// Tu configuración de Firebase
+const firebaseConfig = {
+    apiKey: "AIzaSyDvt5uALq0-Lp4XhG7Y8tjDZD7BOSxP_eI",
+    authDomain: "vehiculo-b415f.firebaseapp.com",
+    projectId: "vehiculo-b415f",
+    storageBucket: "vehiculo-b415f.appspot.com",
+    messagingSenderId: "61014179644",
+    appId: "1:61014179644:web:7d13477e77a85ac55ee839"
+};
+
+// Inicializar Firebase
+const app = initializeApp(firebaseConfig);
+const firestore = getFirestore(app); // Obtén la instancia de Firestore
+const auth = getAuth(app); // Obtén la instancia de autenticación
+const provider = new GoogleAuthProvider(); // Proveedor de Google para autenticación
+
+console.log("Conexión a Firebase establecida correctamente.");
+
+document.addEventListener('DOMContentLoaded', () => {
+    // Registrar Usuario
+    const registrarForm = document.querySelector('#registrarse-form');
+    registrarForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const email = document.querySelector('#registrar-email').value;
+        const password = document.querySelector('#registrar-password').value;
+        console.log('Email:', email, 'Password:', password);
+        createUserWithEmailAndPassword(auth, email, password)
+            .then(userCredential => {
+                console.log('Usuario registrado:', userCredential.user);
+                registrarForm.reset();
+                $('#registrarModal').modal('hide');
+            })
+            .catch(error => {
+                console.error('Error al registrar el usuario:', error);
+                alert('Error al registrar el usuario. Por favor, verifica tus datos e intenta nuevamente.');
+            });
+    });
+
+    // Iniciar Sesión con Email y Password
+    const signinForm = document.querySelector('#iniciar-form');
+    signinForm.addEventListener('submit', e => {
+        e.preventDefault();
+        const email = document.querySelector('#iniciar-email').value;
+        const password = document.querySelector('#iniciar-password').value;
+        console.log('Email:', email, 'Password:', password);
+        signInWithEmailAndPassword(auth, email, password)
+            .then(userCredential => {
+                console.log('Usuario inició sesión:', userCredential.user);
+                window.location.href = 'vehiculo.html'; // Redirigir a vehiculo.html después de iniciar sesión
+            })
+            .catch(error => {
+                console.error('Error al iniciar sesión:', error);
+                alert('Error al iniciar sesión. Por favor, verifica tus credenciales e intenta nuevamente.');
+            });
+    });
+
+    // Iniciar Sesión con Google
+    const googleSignInButton = document.querySelector('#google-signin');
+    googleSignInButton.addEventListener('click', e => {
+        e.preventDefault();
+        signInWithPopup(auth, provider)
+            .then((result) => {
+                console.log('Usuario inició sesión con Google:', result.user);
+                window.location.href = 'vehiculo.html'; // Redirigir a vehiculo.html después de iniciar sesión
+            })
+            .catch((error) => {
+                console.error('Error al iniciar sesión con Google:', error);
+                alert('Error al iniciar sesión con Google. Por favor, intenta nuevamente.');
+            });
+    });
+
+    // Cerrar Sesión
+    const logout = document.querySelector('#salir');
+    logout.addEventListener('click', (e) => {
+        e.preventDefault();
+        signOut(auth).then(() => {
+            console.log('Usuario cerró sesión');
+            window.location.href = 'index.html'; // Redirigir a la página principal después de cerrar sesión
+        }).catch((error) => {
+            console.error('Error al cerrar sesión:', error);
+        });
+    });
+});
