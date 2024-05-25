@@ -25,7 +25,24 @@
     </style>
 </head>
 <body>
-    <h1 class="text-center">Bienvenido a la Gestión de Vehículos</h1>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand" href="#">Gestión de Vehículos</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item active">
+                    <a class="nav-link" href="#">Inicio <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="vehiculo.html">Gestión de Vehículos</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <h1 class="text-center mt-5">Bienvenido a la Gestión de Vehículos</h1>
 
     <!-- Button trigger modal -->
     <div class="text-center mt-5">
@@ -60,12 +77,12 @@
         import { getAuth, signInWithPopup, GoogleAuthProvider } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
 
         const firebaseConfig = {
-            apiKey: "AIzaSyDvt5uALq0-Lp4XhG7Y8tjDZD7BOSxP_eI",
-            authDomain: "vehiculo-b415f.firebaseapp.com",
-            projectId: "vehiculo-b415f",
-            storageBucket: "vehiculo-b415f.appspot.com",
-            messagingSenderId: "61014179644",
-            appId: "1:61014179644:web:7d13477e77a85ac55ee839"
+            apiKey: "YOUR_API_KEY",
+            authDomain: "YOUR_AUTH_DOMAIN",
+            projectId: "YOUR_PROJECT_ID",
+            storageBucket: "YOUR_STORAGE_BUCKET",
+            messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
+            appId: "YOUR_APP_ID"
         };
 
         const app = initializeApp(firebaseConfig);
@@ -84,3 +101,4 @@
     </script>
 </body>
 </html>
+
