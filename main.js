@@ -50,7 +50,7 @@ document.addEventListener('DOMContentLoaded', () => {
         signInWithEmailAndPassword(auth, email, password)
             .then(userCredential => {
                 console.log('Usuario inició sesión:', userCredential.user);
-                window.location.href = 'vehiculo.html'; // Redirigir a vehiculo.html después de iniciar sesión
+                window.location.href = 'vechiculo.html'; // Redirigir a vehiculo.html después de iniciar sesión
             })
             .catch(error => {
                 console.error('Error al iniciar sesión:', error);
@@ -65,7 +65,7 @@ document.addEventListener('DOMContentLoaded', () => {
         signInWithPopup(auth, provider)
             .then((result) => {
                 console.log('Usuario inició sesión con Google:', result.user);
-                window.location.href = 'vehiculo.html'; // Redirigir a vehiculo.html después de iniciar sesión
+                window.location.href = 'vechiculo.html'; // Redirigir a vehiculo.html después de iniciar sesión
             })
             .catch((error) => {
                 console.error('Error al iniciar sesión con Google:', error);
