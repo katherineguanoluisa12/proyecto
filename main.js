@@ -1,17 +1,16 @@
 // Firebase App (es necesario para la autenticación)
 const firebaseConfig = {
-    apiKey: "tu-api-key",
-    authDomain: "tu-auth-domain",
-    projectId: "tu-project-id",
-    storageBucket: "tu-storage-bucket",
-    messagingSenderId: "tu-messaging-sender-id",
-    appId: "tu-app-id"
-};
+    apiKey: "AIzaSyDvt5uALq0-Lp4XhG7Y8tjDZD7BOSxP_eI",
+    authDomain: "vehiculo-b415f.firebaseapp.com",
+    projectId: "vehiculo-b415f",
+    storageBucket: "vehiculo-b415f.appspot.com",
+    messagingSenderId: "61014179644",
+    appId: "1:61014179644:web:7d13477e77a85ac55ee839"
+  };
+
 
 // Inicializar Firebase
 firebase.initializeApp(firebaseConfig);
-const auth = firebase.auth();
-const provider = new firebase.auth.GoogleAuthProvider();
 
 // Resto del código
 document.addEventListener('DOMContentLoaded', () => {
@@ -35,7 +34,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 console.log('Correo electrónico:', userCredential.user.email); // Ver el correo electrónico del usuario
                 registrarForm.reset();
                 $('#registrarModal').modal('hide');
-                window.location.href = 'vechiculo.html'; // Redirigir a vehiculo.html después de registrarse
+                window.location.href = 'vehiculo.html'; // Redirigir a vehiculo.html después de registrarse
             })
             .catch(error => {
                 console.error('Error al registrar el usuario:', error);
@@ -54,7 +53,7 @@ document.addEventListener('DOMContentLoaded', () => {
             .then(userCredential => {
                 console.log('Usuario inició sesión:', userCredential.user);
                 console.log('Correo electrónico:', userCredential.user.email); // Ver el correo electrónico del usuario
-                window.location.href = 'vechiculo.html'; // Redirigir a vehiculo.html después de iniciar sesión
+                window.location.href = 'vehiculo.html'; // Redirigir a vehiculo.html después de iniciar sesión
             })
             .catch(error => {
                 console.error('Error al iniciar sesión:', error);
@@ -70,7 +69,7 @@ document.addEventListener('DOMContentLoaded', () => {
             .then((result) => {
                 console.log('Usuario inició sesión con Google:', result.user);
                 console.log('Correo electrónico:', result.user.email); // Ver el correo electrónico del usuario
-                window.location.href = 'vechiculo.html'; // Redirigir a vehiculo.html después de iniciar sesión
+                window.location.href = 'vehiculo.html'; // Redirigir a vehiculo.html después de iniciar sesión
             })
             .catch((error) => {
                 console.error('Error al iniciar sesión con Google:', error);
