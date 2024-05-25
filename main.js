@@ -1,5 +1,22 @@
-import { signInWithPopup } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-auth.js";
+iimport { initializeApp } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-app.js";
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, signInWithPopup, GoogleAuthProvider } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-auth.js";
 
+// Configuración de Firebase
+const firebaseConfig = {
+    apiKey: "AIzaSyDvt5uALq0-Lp4XhG7Y8tjDZD7BOSxP_eI",
+    authDomain: "vehiculo-b415f.firebaseapp.com",
+    projectId: "vehiculo-b415f",
+    storageBucket: "vehiculo-b415f.appspot.com",
+    messagingSenderId: "61014179644",
+    appId: "1:61014179644:web:7d13477e77a85ac55ee839"
+  };
+  
+// Inicializar Firebase
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app); // Obtener instancia de autenticación
+const provider = new GoogleAuthProvider(); // Crear proveedor de Google
+
+// Resto del código
 document.addEventListener('DOMContentLoaded', () => {
     // Registrar Usuario
     const registrarForm = document.querySelector('#registrarse-form');
