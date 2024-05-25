@@ -29,6 +29,8 @@ document.addEventListener('DOMContentLoaded', () => {
         createUserWithEmailAndPassword(auth, email, password)
             .then(userCredential => {
                 console.log('Usuario registrado:', userCredential.user);
+                registrarForm.reset();
+                $('#registrarModal').modal('hide');
             })
             .catch(error => {
                 console.error('Error al registrar el usuario:', error);
