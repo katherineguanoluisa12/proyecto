@@ -23,6 +23,7 @@
         // Inicializar Firebase
         const app = initializeApp(firebaseConfig);
         const firestore = getFirestore(app); // Obtén la instancia de Firestore
+        const auth=firebase.auth();
 
         console.log("Conexión a Firebase establecida correctamente.");
     </script>
