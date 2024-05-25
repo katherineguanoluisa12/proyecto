@@ -1,5 +1,5 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-app.js";
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-auth.js";
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, signInWithPopup, GoogleAuthProvider } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-auth.js";
 import { getFirestore } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-firestore.js";
 
 // Tu configuración de Firebase
@@ -16,6 +16,7 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const firestore = getFirestore(app); // Obtén la instancia de Firestore
 const auth = getAuth(app); // Obtén la instancia de autenticación
+const provider = new GoogleAuthProvider(); // Proveedor de Google para autenticación
 
 console.log("Conexión a Firebase establecida correctamente.");
 
@@ -39,7 +40,7 @@ document.addEventListener('DOMContentLoaded', () => {
             });
     });
 
-    // Iniciar Sesión
+    // Iniciar Sesión con Email y Password
     const signinForm = document.querySelector('#iniciar-form');
     signinForm.addEventListener('submit', e => {
         e.preventDefault();
@@ -49,12 +50,26 @@ document.addEventListener('DOMContentLoaded', () => {
         signInWithEmailAndPassword(auth, email, password)
             .then(userCredential => {
                 console.log('Usuario inició sesión:', userCredential.user);
-                signinForm.reset();
-                $('#iniciarModal').modal('hide');
+                window.location.href = 'vehiculo.html'; // Redirigir a vehiculo.html después de iniciar sesión
             })
             .catch(error => {
                 console.error('Error al iniciar sesión:', error);
                 alert('Error al iniciar sesión. Por favor, verifica tus credenciales e intenta nuevamente.');
+            });
+    });
+
+    // Iniciar Sesión con Google
+    const googleSignInButton = document.querySelector('#google-signin');
+    googleSignInButton.addEventListener('click', e => {
+        e.preventDefault();
+        signInWithPopup(auth, provider)
+            .then((result) => {
+                console.log('Usuario inició sesión con Google:', result.user);
+                window.location.href = 'vehiculo.html'; // Redirigir a vehiculo.html después de iniciar sesión
+            })
+            .catch((error) => {
+                console.error('Error al iniciar sesión con Google:', error);
+                alert('Error al iniciar sesión con Google. Por favor, intenta nuevamente.');
             });
     });
 
@@ -64,6 +79,7 @@ document.addEventListener('DOMContentLoaded', () => {
         e.preventDefault();
         signOut(auth).then(() => {
             console.log('Usuario cerró sesión');
+            window.location.href = 'index.html'; // Redirigir a la página principal después de cerrar sesión
         }).catch((error) => {
             console.error('Error al cerrar sesión:', error);
         });
