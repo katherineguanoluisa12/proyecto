@@ -1,20 +1,17 @@
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-app.js";
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, signInWithPopup, GoogleAuthProvider } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-auth.js";
-
-// Configuración de Firebase
+// Firebase App (es necesario para la autenticación)
 const firebaseConfig = {
-    apiKey: "AIzaSyDvt5uALq0-Lp4XhG7Y8tjDZD7BOSxP_eI",
-    authDomain: "vehiculo-b415f.firebaseapp.com",
-    projectId: "vehiculo-b415f",
-    storageBucket: "vehiculo-b415f.appspot.com",
-    messagingSenderId: "61014179644",
-    appId: "1:61014179644:web:7d13477e77a85ac55ee839"
-  };
-  
+    apiKey: "tu-api-key",
+    authDomain: "tu-auth-domain",
+    projectId: "tu-project-id",
+    storageBucket: "tu-storage-bucket",
+    messagingSenderId: "tu-messaging-sender-id",
+    appId: "tu-app-id"
+};
+
 // Inicializar Firebase
-const app = initializeApp(firebaseConfig);
-const auth = getAuth(app); // Obtener instancia de autenticación
-const provider = new GoogleAuthProvider(); // Crear proveedor de Google
+firebase.initializeApp(firebaseConfig);
+const auth = firebase.auth();
+const provider = new firebase.auth.GoogleAuthProvider();
 
 // Resto del código
 document.addEventListener('DOMContentLoaded', () => {
@@ -32,7 +29,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         console.log('Email:', email, 'Password:', password);
-        createUserWithEmailAndPassword(auth, email, password)
+        firebase.auth().createUserWithEmailAndPassword(email, password)
             .then(userCredential => {
                 console.log('Usuario registrado:', userCredential.user);
                 console.log('Correo electrónico:', userCredential.user.email); // Ver el correo electrónico del usuario
@@ -53,7 +50,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const email = document.querySelector('#iniciar-email').value;
         const password = document.querySelector('#iniciar-password').value;
         console.log('Email:', email, 'Password:', password);
-        signInWithEmailAndPassword(auth, email, password)
+        firebase.auth().signInWithEmailAndPassword(email, password)
             .then(userCredential => {
                 console.log('Usuario inició sesión:', userCredential.user);
                 console.log('Correo electrónico:', userCredential.user.email); // Ver el correo electrónico del usuario
@@ -69,7 +66,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const googleSignInButton = document.querySelector('#google-signin');
     googleSignInButton.addEventListener('click', e => {
         e.preventDefault();
-        signInWithPopup(auth, provider)
+        firebase.auth().signInWithPopup(provider)
             .then((result) => {
                 console.log('Usuario inició sesión con Google:', result.user);
                 console.log('Correo electrónico:', result.user.email); // Ver el correo electrónico del usuario
@@ -85,7 +82,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const logout = document.querySelector('#salir');
     logout.addEventListener('click', (e) => {
         e.preventDefault();
-        signOut(auth).then(() => {
+        firebase.auth().signOut().then(() => {
             console.log('Usuario cerró sesión');
             window.location.href = 'index.html'; // Redirigir a la página principal después de cerrar sesión
         }).catch((error) => {
