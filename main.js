@@ -1,4 +1,4 @@
-iimport { initializeApp } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-app.js";
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-app.js";
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, signInWithPopup, GoogleAuthProvider } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-auth.js";
 
 // Configuración de Firebase
