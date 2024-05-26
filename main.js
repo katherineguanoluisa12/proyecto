@@ -14,7 +14,7 @@ const firebaseConfig = {
     apiKey: "AIzaSyDvt5uALq0-Lp4XhG7Y8tjDZD7BOSxP_eI",
     authDomain: "vehiculo-b415f.firebaseapp.com",
     projectId: "vehiculo-b415f",
-    storageBucket: "vehiculo-b415f.appspot.com",
+    storageBucket: "vehiculo-b415f",
     messagingSenderId: "61014179644",
     appId: "1:61014179644:web:7d13477e77a85ac55ee839"
 };
@@ -29,7 +29,7 @@ console.log("Conexión a Firebase establecida correctamente.");
 
 document.addEventListener('DOMContentLoaded', () => {
     // Registrar Usuario
-    const registrarForm = document.querySelector('#registrarse-form');
+    const registrarForm = document.querySelector('#registrar-form');
     registrarForm.addEventListener('submit', (e) => {
         e.preventDefault();
         const email = document.querySelector('#registrar-email').value;
