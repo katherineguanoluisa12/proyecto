@@ -1,4 +1,3 @@
-// Tu configuración de Firebase
 const firebaseConfig = {
     apiKey: "AIzaSyDvt5uALq0-Lp4XhG7Y8tjDZD7BOSxP_eI",
     authDomain: "vehiculo-b415f.firebaseapp.com",
@@ -8,76 +7,20 @@ const firebaseConfig = {
     appId: "1:61014179644:web:7d13477e77a85ac55ee839"
 };
 
-// Inicializar Firebase
 const app = firebase.initializeApp(firebaseConfig);
-const firestore = app.firestore(); // Obtén la instancia de Firestore
-const auth = app.auth(); // Obtén la instancia de autenticación
-const provider = new firebase.auth.GoogleAuthProvider(); // Proveedor de Google para autenticación
-
-console.log("Conexión a Firebase establecida correctamente.");
+const auth = firebase.auth();
+const provider = new firebase.auth.GoogleAuthProvider();
 
 document.addEventListener('DOMContentLoaded', () => {
-    // Registrar Usuario
-    const registrarForm = document.querySelector('#registrarse-form');
-    registrarForm.addEventListener('submit', (e) => {
-        e.preventDefault();
-        const email = document.querySelector('#registrar-email').value;
-        const password = document.querySelector('#registrar-password').value;
-        console.log('Email:', email, 'Password:', password);
-        auth.createUserWithEmailAndPassword(email, password)
-            .then(userCredential => {
-                console.log('Usuario registrado:', userCredential.user);
-                registrarForm.reset();
-                $('#registrarModal').modal('hide');
-            })
-            .catch(error => {
-                console.error('Error al registrar el usuario:', error);
-                alert('Error al registrar el usuario. Por favor, verifica tus datos e intenta nuevamente.');
-            });
-    });
+    // Mostrar mensaje de bienvenida o inicio de sesión con Google
+    const mostrarMensaje = () => {
+        const mensaje = document.getElementById('mensaje');
+        const user = auth.currentUser;
+        if (user) {
+            mensaje.textContent = `¡Bienvenido, ${user.displayName || user.email}!`;
+        } else {
+            mensaje.textContent = 'Por favor, inicia sesión con Google:';
+        }
+    };
 
-    // Iniciar Sesión con Email y Password
-    const signinForm = document.querySelector('#iniciar-form');
-    signinForm.addEventListener('submit', e => {
-        e.preventDefault();
-        const email = document.querySelector('#iniciar-email').value;
-        const password = document.querySelector('#iniciar-password').value;
-        console.log('Email:', email, 'Password:', password);
-        auth.signInWithEmailAndPassword(email, password)
-            .then(userCredential => {
-                console.log('Usuario inició sesión:', userCredential.user);
-                window.location.href = 'vechiculo.html'; // Redirigir a vehiculo.html después de iniciar sesión
-            })
-            .catch(error => {
-                console.error('Error al iniciar sesión:', error);
-                alert('Error al iniciar sesión. Por favor, verifica tus credenciales e intenta nuevamente.');
-            });
-    });
-
-    // Iniciar Sesión con Google
-    const googleSignInButton = document.querySelector('#google-signin');
-    googleSignInButton.addEventListener('click', e => {
-        e.preventDefault();
-        auth.signInWithPopup(provider)
-            .then((result) => {
-                console.log('Usuario inició sesión con Google:', result.user);
-                window.location.href = 'vechiculo.html'; // Redirigir a vehiculo.html después de iniciar sesión
-            })
-            .catch((error) => {
-                console.error('Error al iniciar sesión con Google:', error);
-                alert('Error al iniciar sesión con Google. Por favor, intenta nuevamente.');
-            });
-    });
-
-    // Cerrar Sesión
-    const logout = document.querySelector('#salir');
-    logout.addEventListener('click', (e) => {
-        e.preventDefault();
-        auth.signOut().then(() => {
-            console.log('Usuario cerró sesión');
-            window.location.href = 'index.html'; // Redirigir a la página principal después de cerrar sesión
-        }).catch((error) => {
-            console.error('Error al cerrar sesión:', error);
-        });
-    });
-});
+    mostrarMensaje(); // Mostrar mensaje al cargar la
