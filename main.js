@@ -1,5 +1,12 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-app.js";
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, signInWithPopup, GoogleAuthProvider } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-auth.js";
+import { 
+    getAuth, 
+    createUserWithEmailAndPassword, 
+    signInWithEmailAndPassword, 
+    signOut, 
+    GoogleAuthProvider,
+    signInWithPopup 
+} from "https://www.gstatic.com/firebasejs/10.9.0/firebase-auth.js";
 import { getFirestore } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-firestore.js";
 
 // Tu configuración de Firebase
@@ -7,7 +14,7 @@ const firebaseConfig = {
     apiKey: "AIzaSyDvt5uALq0-Lp4XhG7Y8tjDZD7BOSxP_eI",
     authDomain: "vehiculo-b415f.firebaseapp.com",
     projectId: "vehiculo-b415f",
-    storageBucket: "vehiculo-b415f.appspot.com",
+    storageBucket: "vehiculo-b415f",
     messagingSenderId: "61014179644",
     appId: "1:61014179644:web:7d13477e77a85ac55ee839"
 };
@@ -50,7 +57,7 @@ document.addEventListener('DOMContentLoaded', () => {
         signInWithEmailAndPassword(auth, email, password)
             .then(userCredential => {
                 console.log('Usuario inició sesión:', userCredential.user);
-                window.location.href = 'vehiculo.html'; // Redirigir a vehiculo.html después de iniciar sesión
+                window.location.href = 'vechiculo.html'; // Redirigir a vehiculo.html después de iniciar sesión
             })
             .catch(error => {
                 console.error('Error al iniciar sesión:', error);
@@ -65,7 +72,7 @@ document.addEventListener('DOMContentLoaded', () => {
         signInWithPopup(auth, provider)
             .then((result) => {
                 console.log('Usuario inició sesión con Google:', result.user);
-                window.location.href = 'vehiculo.html'; // Redirigir a vehiculo.html después de iniciar sesión
+                window.location.href = 'vechiculo.html'; // Redirigir a vehiculo.html después de iniciar sesión
             })
             .catch((error) => {
                 console.error('Error al iniciar sesión con Google:', error);
@@ -85,3 +92,4 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 });
+
