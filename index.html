@@ -3,104 +3,59 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Matricula Vehicular</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <title>Proyecto</title>
+    <!-- Incluir Bootstrap CSS -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <a class="navbar-brand" href="#">Vehiculo</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav ml-auto">
-                <li class="nav-item">
-                    <a class="nav-link" href="#" data-toggle="modal" data-target="#iniciarModal">Iniciar sesión</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#" data-toggle="modal" data-target="#registrarModal">Registrarse</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#" id="salir">Salir</a>
-                </li>
-            </ul>
-        </div>
-    </nav>
-
     <!-- Modal de Registro -->
-    <div class="modal fade" id="registrarModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal" id="registrarModal" tabindex="-1" role="dialog">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Registrarse</h5>
+                    <h5 class="modal-title">Registrarse</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form id="registrar-form">
+                    <form id="registrarse-form">
                         <div class="form-group">
-                            <input type="email" id="registrar-email" class="form-control" placeholder="Email" required>
+                            <label for="registrar-email">Email</label>
+                            <input type="email" class="form-control" id="registrar-email" required>
                         </div>
                         <div class="form-group">
-                            <input type="password" id="registrar-password" class="form-control" placeholder="Password" required>
+                            <label for="registrar-password">Password</label>
+                            <input type="password" class="form-control" id="registrar-password" required>
                         </div>
-                        <button type="submit" class="btn btn-primary">Registrar</button>
+                        <button type="submit" class="btn btn-primary">Registrarse</button>
                     </form>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Modal de Inicio de Sesión -->
-    <div class="modal fade" id="iniciarModal" tabindex="-1" role="dialog" aria-labelledby="iniciarModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="iniciarModalLabel">Iniciar sesión</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <form id="iniciar-form">
-                        <div class="form-group">
-                            <input type="email" id="iniciar-email" class="form-control" placeholder="Email" required>
-                        </div>
-                        <div class="form-group">
-                            <input type="password" id="iniciar-password" class="form-control" placeholder="Password" required>
-                        </div>
-                        <button type="submit" class="btn btn-primary">Iniciar sesión</button>
-                        <button type="button" id="google-signin" class="btn btn-danger">Iniciar sesión con Google</button>
-                    </form>
-                </div>
-            </div>
+    <!-- Formulario de Iniciar Sesión -->
+    <form id="iniciar-form">
+        <div class="form-group">
+            <label for="iniciar-email">Email</label>
+            <input type="email" class="form-control" id="iniciar-email" required>
         </div>
-    </div>
+        <div class="form-group">
+            <label for="iniciar-password">Password</label>
+            <input type="password" class="form-control" id="iniciar-password" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Iniciar Sesión</button>
+    </form>
 
-    <h1 style="color: beige; text-align: center;">----- Bienvenido -----</h1>
-    <h1 style="color: beige; text-align: center;">----- MATRICULA VEHICULAR ONLINE -----</h1>
-    <div style="text-align: center;">
-        <img src="img/fondo1.jpg" alt="Imagen" style="max-width: 100%; height: auto;">
-    </div>
+    <button id="google-signin" class="btn btn-danger">Iniciar sesión con Google</button>
+    <button id="salir" class="btn btn-secondary">Cerrar Sesión</button>
 
-    <table style="width: 100%;">
-        <tr>
-            <th style="background-color: black; color: beige;">----- Objetivo -----</th>
-            <th style="background-color: black; color: beige;">----- Misión -----</th>
-            <th style="background-color: black; color: beige;">----- Visión -----</th>
-        </tr>
-        <tr>
-            <td style="color: beige; background-color: black; text-align: center;">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed at nunc non sapien varius.</td>
-            <td style="color: beige; background-color: black; text-align: center;">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed at nunc non sapien varius.</td>
-            <td style="color: beige; background-color: black; text-align: center;">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed at nunc non sapien varius.</td>
-        </tr>
-    </table>
-
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha384-vtXRMe3mGCbOeY7l30aIg8H9p3GdeSe4IFlP6G8JMa7o7lXvnz3GFKzPxzJdPfGK" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
-    <script type="module" src="main.js"></script> <!-- Asegúrate de que main.js se carga como módulo -->
+    <!-- Incluir Bootstrap JS y jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <!-- Incluir el archivo main.js -->
+    <script type="module" src="main.js"></script>
 </body>
 </html>
 
