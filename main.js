@@ -1,7 +1,3 @@
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-app.js";
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, signInWithPopup, GoogleAuthProvider } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-auth.js";
-import { getFirestore } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-firestore.js";
-
 // Tu configuración de Firebase
 const firebaseConfig = {
     apiKey: "AIzaSyDvt5uALq0-Lp4XhG7Y8tjDZD7BOSxP_eI",
@@ -13,10 +9,10 @@ const firebaseConfig = {
 };
 
 // Inicializar Firebase
-const app = initializeApp(firebaseConfig);
-const firestore = getFirestore(app); // Obtén la instancia de Firestore
-const auth = getAuth(app); // Obtén la instancia de autenticación
-const provider = new GoogleAuthProvider(); // Proveedor de Google para autenticación
+const app = firebase.initializeApp(firebaseConfig);
+const firestore = app.firestore(); // Obtén la instancia de Firestore
+const auth = app.auth(); // Obtén la instancia de autenticación
+const provider = new firebase.auth.GoogleAuthProvider(); // Proveedor de Google para autenticación
 
 console.log("Conexión a Firebase establecida correctamente.");
 
@@ -28,7 +24,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const email = document.querySelector('#registrar-email').value;
         const password = document.querySelector('#registrar-password').value;
         console.log('Email:', email, 'Password:', password);
-        createUserWithEmailAndPassword(auth, email, password)
+        auth.createUserWithEmailAndPassword(email, password)
             .then(userCredential => {
                 console.log('Usuario registrado:', userCredential.user);
                 registrarForm.reset();
@@ -47,7 +43,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const email = document.querySelector('#iniciar-email').value;
         const password = document.querySelector('#iniciar-password').value;
         console.log('Email:', email, 'Password:', password);
-        signInWithEmailAndPassword(auth, email, password)
+        auth.signInWithEmailAndPassword(email, password)
             .then(userCredential => {
                 console.log('Usuario inició sesión:', userCredential.user);
                 window.location.href = 'vechiculo.html'; // Redirigir a vehiculo.html después de iniciar sesión
@@ -62,7 +58,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const googleSignInButton = document.querySelector('#google-signin');
     googleSignInButton.addEventListener('click', e => {
         e.preventDefault();
-        signInWithPopup(auth, provider)
+        auth.signInWithPopup(provider)
             .then((result) => {
                 console.log('Usuario inició sesión con Google:', result.user);
                 window.location.href = 'vechiculo.html'; // Redirigir a vehiculo.html después de iniciar sesión
@@ -77,7 +73,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const logout = document.querySelector('#salir');
     logout.addEventListener('click', (e) => {
         e.preventDefault();
-        signOut(auth).then(() => {
+        auth.signOut().then(() => {
             console.log('Usuario cerró sesión');
             window.location.href = 'index.html'; // Redirigir a la página principal después de cerrar sesión
         }).catch((error) => {
@@ -85,4 +81,3 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 });
-
