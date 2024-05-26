@@ -20,10 +20,10 @@ const provider = new GoogleAuthProvider(); // Proveedor de Google para autentica
 
 console.log("Conexión a Firebase establecida correctamente.");
 
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', () => {
     // Registrar Usuario
     const registrarForm = document.querySelector('#registrarse-form');
-    registrarForm.addEventListener('submit', function(e) {
+    registrarForm.addEventListener('submit', (e) => {
         e.preventDefault();
         const email = document.querySelector('#registrar-email').value;
         const password = document.querySelector('#registrar-password').value;
@@ -42,7 +42,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Iniciar Sesión con Email y Password
     const signinForm = document.querySelector('#iniciar-form');
-    signinForm.addEventListener('submit', function(e) {
+    signinForm.addEventListener('submit', (e) => {
         e.preventDefault();
         const email = document.querySelector('#iniciar-email').value;
         const password = document.querySelector('#iniciar-password').value;
@@ -60,7 +60,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Iniciar Sesión con Google
     const googleSignInButton = document.querySelector('#google-signin');
-    googleSignInButton.addEventListener('click', function(e) {
+    googleSignInButton.addEventListener('click', (e) => {
         e.preventDefault();
         signInWithPopup(auth, provider)
             .then((result) => {
@@ -75,7 +75,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Cerrar Sesión
     const logout = document.querySelector('#salir');
-    logout.addEventListener('click', function(e) {
+    logout.addEventListener('click', (e) => {
         e.preventDefault();
         signOut(auth).then(() => {
             console.log('Usuario cerró sesión');
