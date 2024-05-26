@@ -1,12 +1,5 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-app.js";
-import { 
-    getAuth, 
-    createUserWithEmailAndPassword, 
-    signInWithEmailAndPassword, 
-    signOut, 
-    GoogleAuthProvider,
-    signInWithPopup 
-} from "https://www.gstatic.com/firebasejs/10.9.0/firebase-auth.js";
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, signInWithPopup, GoogleAuthProvider } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-auth.js";
 import { getFirestore } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-firestore.js";
 
 // Tu configuración de Firebase
@@ -14,7 +7,7 @@ const firebaseConfig = {
     apiKey: "AIzaSyDvt5uALq0-Lp4XhG7Y8tjDZD7BOSxP_eI",
     authDomain: "vehiculo-b415f.firebaseapp.com",
     projectId: "vehiculo-b415f",
-    storageBucket: "vehiculo-b415f",
+    storageBucket: "vehiculo-b415f.appspot.com",
     messagingSenderId: "61014179644",
     appId: "1:61014179644:web:7d13477e77a85ac55ee839"
 };
@@ -27,10 +20,10 @@ const provider = new GoogleAuthProvider(); // Proveedor de Google para autentica
 
 console.log("Conexión a Firebase establecida correctamente.");
 
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', function() {
     // Registrar Usuario
-    const registrarForm = document.querySelector('#registrar-form');
-    registrarForm.addEventListener('submit', (e) => {
+    const registrarForm = document.querySelector('#registrarse-form');
+    registrarForm.addEventListener('submit', function(e) {
         e.preventDefault();
         const email = document.querySelector('#registrar-email').value;
         const password = document.querySelector('#registrar-password').value;
@@ -49,7 +42,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Iniciar Sesión con Email y Password
     const signinForm = document.querySelector('#iniciar-form');
-    signinForm.addEventListener('submit', e => {
+    signinForm.addEventListener('submit', function(e) {
         e.preventDefault();
         const email = document.querySelector('#iniciar-email').value;
         const password = document.querySelector('#iniciar-password').value;
@@ -67,7 +60,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Iniciar Sesión con Google
     const googleSignInButton = document.querySelector('#google-signin');
-    googleSignInButton.addEventListener('click', e => {
+    googleSignInButton.addEventListener('click', function(e) {
         e.preventDefault();
         signInWithPopup(auth, provider)
             .then((result) => {
@@ -82,7 +75,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Cerrar Sesión
     const logout = document.querySelector('#salir');
-    logout.addEventListener('click', (e) => {
+    logout.addEventListener('click', function(e) {
         e.preventDefault();
         signOut(auth).then(() => {
             console.log('Usuario cerró sesión');
@@ -92,4 +85,5 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 });
+
 
