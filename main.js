@@ -27,4 +27,6 @@ const provider = new GoogleAuthProvider(); // Proveedor de Google para autentica
 
 console.log("Conexión a Firebase establecida correctamente.");
 
-document.addEventListener('DOMContentLoaded')
+document.addEventListener('DOMContentLoaded', () => {
+    // Aquí dentro puedes colocar el código que deseas ejecutar cuando el DOM esté completamente cargado
+});
