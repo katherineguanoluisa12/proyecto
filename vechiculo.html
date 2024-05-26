@@ -150,6 +150,7 @@
                 <th>Fecha</th>
                 <th>Estado</th>
                 <th>Kilometraje</th>
+                <th>Acción</th> <!-- Nuevo título para la columna de acción -->
             </tr>
         </thead>
         <tbody>
@@ -242,6 +243,7 @@
                 const querySnapshot = await getDocs(collection(db, 'vehiculo'));
                 querySnapshot.forEach((doc) => {
                     const vehicle = doc.data();
+                    const vehicleId = doc.id;
                     vehiculosTableBody.innerHTML += `
                         <tr>
                             <td>${vehicle.id}</td>
@@ -254,6 +256,10 @@
                             <td>${vehicle.fecha}</td>
                             <td>${vehicle.estado}</td>
                             <td>${vehicle.kilometraje}</td>
+                            <td>
+                                <button type="button" onclick="editar('${vehicleId}')">Editar</button>
+                                <button type="button" onclick="eliminar('${vehicleId}')">Eliminar</button>
+                            </td>
                         </tr>
                     `;
                 });
@@ -325,9 +331,54 @@
             }
         };
 
+        // Función para editar un vehículo
+        window.editar = (id) => {
+            currentEditId = id;
+            buscarPorId(id); // Llama a la función para buscar el vehículo por ID y llenar el formulario de edición
+        };
+
+        // Función para eliminar un vehículo
+        window.eliminar = async (id) => {
+            if (confirm('¿Estás seguro de que deseas eliminar este vehículo?')) {
+                try {
+                    await deleteDoc(doc(db, 'vehiculo', id));
+                    alert('Vehículo eliminado exitosamente!');
+                    displayVehicles();
+                } catch (error) {
+                    console.error('Error al eliminar el vehículo: ', error);
+                    alert('Error al eliminar el vehículo: ' + error.message);
+                }
+            }
+        };
+
+        // Función para buscar un vehículo por su ID
+        async function buscarPorId(id) {
+            try {
+                const docRef = doc(db, 'vehiculo', id);
+                const docSnap = await getDoc(docRef);
+                if (docSnap.exists()) {
+                    const vehicleData = docSnap.data();
+                    // Llena el formulario con los datos del vehículo encontrado
+                    form.id.value = vehicleData.id;
+                    form.marca.value = vehicleData.marca;
+                    form.modelo.value = vehicleData.modelo;
+                    form.ano_fabricacion.value = vehicleData.ano_fabricacion;
+                    form.placa.value = vehicleData.placa;
+                    form.tipo.value = vehicleData.tipo;
+                    form.capacidad_carga.value = vehicleData.capacidad_carga;
+                    form.fecha.value = vehicleData.fecha;
+                    form.estado.value = vehicleData.estado;
+                    form.kilometraje.value = vehicleData.kilometraje;
+                } else {
+                    console.error('No se encontró ningún vehículo con el ID proporcionado.');
+                }
+            } catch (error) {
+                console.error('Error al buscar el vehículo por ID: ', error);
+                alert('Error al buscar el vehículo por ID: ' + error.message);
+            }
+        }
+
         window.onload = displayVehicles;
     </script>
 </body>
 </html>
-
-
