@@ -1,5 +1,12 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-app.js";
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, signInWithPopup, GoogleAuthProvider } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-auth.js";
+import { 
+    getAuth, 
+    createUserWithEmailAndPassword, 
+    signInWithEmailAndPassword, 
+    signOut, 
+    GoogleAuthProvider,
+    signInWithPopup 
+} from "https://www.gstatic.com/firebasejs/10.9.0/firebase-auth.js";
 import { getFirestore } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-firestore.js";
 
 // Tu configuración de Firebase
@@ -22,7 +29,7 @@ console.log("Conexión a Firebase establecida correctamente.");
 
 document.addEventListener('DOMContentLoaded', () => {
     // Registrar Usuario
-    const registrarForm = document.querySelector('#registrar-form');
+    const registrarForm = document.querySelector('#registrarse-form');
     registrarForm.addEventListener('submit', (e) => {
         e.preventDefault();
         const email = document.querySelector('#registrar-email').value;
