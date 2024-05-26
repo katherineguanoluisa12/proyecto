@@ -22,7 +22,7 @@ console.log("Conexión a Firebase establecida correctamente.");
 
 document.addEventListener('DOMContentLoaded', () => {
     // Registrar Usuario
-    const registrarForm = document.querySelector('#registrarse-form');
+    const registrarForm = document.querySelector('#registrar-form');
     registrarForm.addEventListener('submit', (e) => {
         e.preventDefault();
         const email = document.querySelector('#registrar-email').value;
@@ -42,7 +42,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Iniciar Sesión con Email y Password
     const signinForm = document.querySelector('#iniciar-form');
-    signinForm.addEventListener('submit', (e) => {
+    signinForm.addEventListener('submit', e => {
         e.preventDefault();
         const email = document.querySelector('#iniciar-email').value;
         const password = document.querySelector('#iniciar-password').value;
@@ -50,7 +50,7 @@ document.addEventListener('DOMContentLoaded', () => {
         signInWithEmailAndPassword(auth, email, password)
             .then(userCredential => {
                 console.log('Usuario inició sesión:', userCredential.user);
-                window.location.href = 'vechiculo.html'; // Redirigir a vehiculo.html después de iniciar sesión
+                window.location.href = 'vehiculo.html'; // Redirigir a vehiculo.html después de iniciar sesión
             })
             .catch(error => {
                 console.error('Error al iniciar sesión:', error);
@@ -60,12 +60,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Iniciar Sesión con Google
     const googleSignInButton = document.querySelector('#google-signin');
-    googleSignInButton.addEventListener('click', (e) => {
+    googleSignInButton.addEventListener('click', e => {
         e.preventDefault();
         signInWithPopup(auth, provider)
             .then((result) => {
                 console.log('Usuario inició sesión con Google:', result.user);
-                window.location.href = 'vechiculo.html'; // Redirigir a vehiculo.html después de iniciar sesión
+                window.location.href = 'vehiculo.html'; // Redirigir a vehiculo.html después de iniciar sesión
             })
             .catch((error) => {
                 console.error('Error al iniciar sesión con Google:', error);
@@ -85,5 +85,3 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 });
-
-
